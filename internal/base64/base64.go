@@ -39,7 +39,7 @@ func getFileContent(path string) string {
 func decode(value string) string {
 	var decodedString []byte
 
-	decodedString, _ = b64.RawStdEncoding.DecodeString(value)
+	decodedString, _ = b64.StdEncoding.DecodeString(value)
 
 	return string(decodedString)
 }

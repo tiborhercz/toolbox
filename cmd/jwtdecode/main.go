@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/jwt"
+	"github.com/tiborhercz/cli-toolbox/internal/jwtdecode"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
 )
 
@@ -10,10 +10,10 @@ var (
 	options model.Options
 
 	rootCmd = &cobra.Command{
-		Use:   "jwt",
+		Use:   "jwtdecode",
 		Short: "Encode and decode jwt strings",
 		Run: func(cmd *cobra.Command, args []string) {
-			jwt.Process(options.Value)
+			jwtdecode.Process(options.Value)
 		},
 	}
 )

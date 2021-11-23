@@ -1,0 +1,35 @@
+project_name: "cli-toolbox"
+
+before:
+  hooks:
+    # Remove unused packaged from the build process
+    - go mod tidy
+    - go generate
+
+builds:
+  - main: ./main.go
+    binary: cli-toolbox
+    goos: ["linux", "darwin", "windows"]
+    goarch: ["386", "amd64"]
+    ldflags:
+      - -s -w -X "github.com/tiborhercz/cli-toolbox/cmd.version={{.Version}}"
+    env:
+      - CGO_ENABLED=0
+
+brews:
+  - tap:
+      owner: tiborhercz
+      name: homebrew-cli-toolbox
+    name: cli-toolbox
+    homepage: "https://github.com/tiborhercz/cli-toolbox"
+    description: "A collection of various cli tools"
+    license: "MIT"
+    skip_upload: auto
+    commit_author:
+      name: Tibor Hercz
+      email: git@hercz.nl
+    folder: Formula
+    install: |-
+      bin.install "cli-toolbox"
+    test: |
+      system "#{bin}/cli-toolbox -v"

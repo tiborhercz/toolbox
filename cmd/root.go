@@ -14,7 +14,7 @@ var (
 		Use:   "cli-toolbox",
 		Short: "cli toolbox",
 		Run: func(cmd *cobra.Command, args []string) {
-
+			cmd.Help()
 		},
 	}
 )

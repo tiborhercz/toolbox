@@ -9,7 +9,7 @@ import (
 
 func Process(value string, path string, optionDecode bool, urlEncoding bool) string {
 	var (
-		data = value
+		data            = value
 		processedString string
 	)
 

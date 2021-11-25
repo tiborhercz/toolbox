@@ -29,7 +29,7 @@ func decodeB64(value string) []byte {
 		log.Fatal(err)
 	}
 
-	if !json.Valid(decodedString){
+	if !json.Valid(decodedString) {
 		log.Fatal("invalid JSON")
 	}
 

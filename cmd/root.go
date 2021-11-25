@@ -3,13 +3,10 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/model"
 	"os"
 )
 
 var (
-	options model.Options
-
 	rootCmd = &cobra.Command{
 		Use:   "cli-toolbox",
 		Short: "cli toolbox",

@@ -11,7 +11,7 @@ var (
 
 	cidrCmd = &cobra.Command{
 		Use:   "cidr",
-		Short: "Encode and decode cidr strings",
+		Short: "Calculate IPv4 and IPv6 CIDR ranges",
 		Run: func(cmd *cobra.Command, args []string) {
 			cidr.Main(cidrOptions.IpAddress, cidrOptions.IpCidrPrefix)
 		},

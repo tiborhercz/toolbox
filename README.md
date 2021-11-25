@@ -46,3 +46,16 @@ Flags:
   -h, --help           help for jwtdecode
   -v, --value string   Value string
 ```
+
+### cidr
+```
+Calculate IPv4 and IPv6 CIDR ranges
+
+Usage:
+  cli-toolbox cidr [flags]
+
+Flags:
+  -c, --cidrprefix int     IpCidrPrefix default 64 (default 64)
+  -h, --help               help for cidr
+  -i, --ipaddress string   ip address
+```

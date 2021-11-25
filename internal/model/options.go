@@ -11,6 +11,7 @@ type JwtOptions struct {
 	Value       string
 }
 
-type cidrOptions struct {
-	address       string
+type CidrOptions struct {
+	IpAddress       string
+	IpCidrPrefix    int64
 }

@@ -28,6 +28,7 @@ func Main(ipAddress string, ipCidrPrefix int64) {
 
 func outputIPv4() {
 	log.Printf("Total ipv4 addresses: %v \n", IPv4Data.TotalIpAddresses)
+	log.Printf("Subnetmask: %v \n", IPv4Data.SubnetMask)
 }
 
 func parseIpAddress(ipAddress string) (net.IP, net.IPNet) {
@@ -49,6 +50,7 @@ func getIpPrefixNumber(ipNetAddress string) int64 {
 
 func processIpv4(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber int64) {
 	IPv4Data.TotalIpAddresses = strconv.Itoa(ipv4.GetTotalCidrIpAddresses(ipPrefixNumber))
+	IPv4Data.SubnetMask = ipv4.GetSubnetMask(ipPrefixNumber)
 }
 
 //func processIpv6(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber int64, ipCidrPrefix int64) {

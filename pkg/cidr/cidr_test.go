@@ -33,13 +33,3 @@ func TestIpv6ParseIpAddress(t *testing.T) {
 		t.Fatalf("parsedIpNet is %v expected %v", parsedIp.String(), testParsedIpNet)
 	}
 }
-
-func TestGetIpNetworkSize(t *testing.T) {
-	value := "192.168.0.0/32"
-	test := int64(32)
-	networkSize := getIpNetworkSize(value)
-
-	if networkSize != test {
-		t.Fatalf("networkSize is %v expected %v", networkSize, test)
-	}
-}

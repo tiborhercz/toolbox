@@ -13,5 +13,5 @@ type JwtOptions struct {
 
 type CidrOptions struct {
 	IpAddress       string
-	IpCidrPrefix    int64
+	PrefixLength    int64
 }

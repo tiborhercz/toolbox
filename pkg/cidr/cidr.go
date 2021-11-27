@@ -2,39 +2,32 @@ package cidr
 
 import (
 	log "github.com/sirupsen/logrus"
+	"github.com/tiborhercz/cli-toolbox/internal/model"
 	"github.com/tiborhercz/cli-toolbox/pkg/ipv4"
-	"github.com/tiborhercz/cli-toolbox/pkg/ipv6"
-	"math/big"
 	"net"
 	"strconv"
 	"strings"
 )
 
+var (
+	IPv4Data = model.IPv4OutputData {}
+)
+
 func Main(ipAddress string, ipCidrPrefix int64) {
 	parsedIpAddress, parsedIpNetAddress := parseIpAddress(ipAddress)
+	ipPrefixNumber := getIpPrefixNumber(parsedIpNetAddress.String())
 
-	outputTotalIpAddresses(parsedIpAddress, parsedIpNetAddress, ipCidrPrefix)
+	if parsedIpAddress.To4() != nil {
+		processIpv4(parsedIpAddress, parsedIpNetAddress, ipPrefixNumber)
+
+		outputIPv4()
+	} else if parsedIpAddress.To16() != nil {
+		log.Println("IPv6 is not yet supported")
+	}
 }
 
-func outputTotalIpAddresses(ipAddress net.IP, ipNetAddress net.IPNet, ipCidrPrefix int64)  {
-	var (
-		totalIpAddresses int
-		totalIpAddressesBig big.Int
-	)
-
-	networkSize := getIpNetworkSize(ipNetAddress.String())
-
-	if ipAddress.To4() != nil {
-		totalIpAddresses = ipv4.GetTotalCidrIpAddresses(networkSize)
-		log.Printf("Total ipv4 addresses: %d \n", totalIpAddresses)
-	} else if ipAddress.To16() != nil {
-		if networkSize > ipCidrPrefix {
-			log.Fatalf("The IPs cidr prefix is bigger then the set cidr prefix option. Cidr prefix from IP is: %v. Set cidr prefix is %v", networkSize, ipCidrPrefix)
-		}
-
-		totalIpAddressesBig = ipv6.GetTotalIpAddresses(networkSize, ipCidrPrefix)
-		log.Printf("Total ipv6 addresses: %v \n", totalIpAddressesBig.String())
-	}
+func outputIPv4() {
+	log.Printf("Total ipv4 addresses: %v \n", IPv4Data.TotalIpAddresses)
 }
 
 func parseIpAddress(ipAddress string) (net.IP, net.IPNet) {
@@ -47,9 +40,22 @@ func parseIpAddress(ipAddress string) (net.IP, net.IPNet) {
 	return parsedIp, *parsedIpNet
 }
 
-func getIpNetworkSize(ipNetAddress string) int64 {
+func getIpPrefixNumber(ipNetAddress string) int64 {
 	ipAddressCidrPrefix := strings.Split(ipNetAddress, "/")[1]
-	networkSize, _ := strconv.ParseInt(ipAddressCidrPrefix, 10,10)
+	networkSize, _ := strconv.ParseInt(ipAddressCidrPrefix, 10, 10)
 
 	return networkSize
 }
+
+func processIpv4(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber int64) {
+	IPv4Data.TotalIpAddresses = strconv.Itoa(ipv4.GetTotalCidrIpAddresses(ipPrefixNumber))
+}
+
+//func processIpv6(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber int64, ipCidrPrefix int64) {
+//	if ipPrefixNumber > ipCidrPrefix {
+//		log.Fatalf("The IPs cidr prefix is bigger then the set cidr prefix option. Cidr prefix from IP is: %v. Set cidr prefix is %v", ipPrefixNumber, ipCidrPrefix)
+//	}
+//
+//	TotalIpAddressesBigInt := ipv6.GetTotalIpAddresses(ipPrefixNumber, ipCidrPrefix)
+//	IPv6Data.TotalIpAddresses = TotalIpAddressesBigInt.String()
+//}

@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/tiborhercz/cli-toolbox/internal/cidr"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
-	"github.com/tiborhercz/cli-toolbox/pkg/cidr"
 )
 
 var (
@@ -13,7 +13,13 @@ var (
 		Use:   "cidr",
 		Short: "Calculate IPv4 CIDR ranges",
 		Run: func(cmd *cobra.Command, args []string) {
-			cidr.Main(cidrOptions.IpAddress, cidrOptions.PrefixLength)
+			if cidrOptions.IpAddress != "" {
+				cidr.IpAddress(cidrOptions.IpAddress)
+			}
+
+			if cidrOptions.SubnetMaskAddress != "" {
+				cidr.SubnetMask(cidrOptions.SubnetMaskAddress)
+			}
 		},
 	}
 )

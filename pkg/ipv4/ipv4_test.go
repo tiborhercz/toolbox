@@ -3,7 +3,7 @@ package ipv4
 import "testing"
 
 func TestCalculateTotalIpAddresses(t *testing.T) {
-	value := int64(10)
+	value := byte(10)
 	test := 4194304
 	totalIpAddresses := calculateTotalIpAddresses(value)
 

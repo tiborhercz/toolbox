@@ -1,12 +1,19 @@
 package ipv4
 
 import (
+	"encoding/binary"
 	"math"
 	"strconv"
 	"strings"
 )
 
-func GetSubnetMask(ipPrefixNumber int64) string {
+func prefixNumberToSubnetMask(ipPrefixNumber byte) []byte {
+	bs := make([]byte, 4)
+	binary.BigEndian.PutUint32(bs, 0xFFFFFFFF<<(32-ipPrefixNumber))
+	return bs
+}
+
+func GetSubnetMask(ipPrefixNumber byte) string {
 	subnetMask := []string{"255", "255", "255", "255"}
 	// Calculate the octet position also known as the subnet mask class. Subnet mask is a 4 octet number.
 	octetPos := int(math.Floor(float64(ipPrefixNumber) / float64(8))) // Floor used to match array indexes

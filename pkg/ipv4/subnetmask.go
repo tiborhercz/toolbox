@@ -3,9 +3,15 @@ package ipv4
 import (
 	"encoding/binary"
 	"math"
+	"math/bits"
 	"strconv"
 	"strings"
 )
+
+func subnetMaskToCidr(bs []byte) int {
+	addr := binary.BigEndian.Uint32(bs[0:])
+	return bits.OnesCount32(addr)
+}
 
 func prefixNumberToSubnetMask(ipPrefixNumber byte) []byte {
 	bs := make([]byte, 4)

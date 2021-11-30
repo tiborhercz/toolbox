@@ -41,14 +41,14 @@ func parseIpAddress(ipAddress string) (net.IP, net.IPNet) {
 	return parsedIp, *parsedIpNet
 }
 
-func getIpPrefixNumber(ipNetAddress string) int64 {
+func getIpPrefixNumber(ipNetAddress string) byte {
 	ipAddressCidrPrefix := strings.Split(ipNetAddress, "/")[1]
 	networkSize, _ := strconv.ParseInt(ipAddressCidrPrefix, 10, 10)
 
-	return networkSize
+	return byte(networkSize)
 }
 
-func processIpv4(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber int64) {
+func processIpv4(ipAddress net.IP, ipNetAddress net.IPNet, ipPrefixNumber byte) {
 	IPv4Data.TotalIpAddresses = strconv.Itoa(ipv4.GetTotalCidrIpAddresses(ipPrefixNumber))
 	IPv4Data.SubnetMask = ipv4.GetSubnetMask(ipPrefixNumber)
 }

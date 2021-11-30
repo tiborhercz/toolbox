@@ -20,5 +20,6 @@ var (
 
 func init() {
 	rootCmd.AddCommand(cidrCmd)
-	cidrCmd.Flags().StringVarP(&cidrOptions.IpAddress, "ipaddress", "i", "", "ip address. Example inputs: 10.0.0.0/16")
+	cidrCmd.Flags().StringVarP(&cidrOptions.IpAddress, "ipaddress", "i", "", "ip address. Example input: 10.0.0.0/16")
+	cidrCmd.Flags().StringVarP(&cidrOptions.SubnetMaskAddress, "subnetmask", "s", "", "Subnetmask address. Example input: 255.255.255.0")
 }

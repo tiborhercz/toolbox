@@ -8,10 +8,11 @@ type Base64Options struct {
 }
 
 type JwtOptions struct {
-	Value       string
+	Value string
 }
 
 type CidrOptions struct {
-	IpAddress       string
-	PrefixLength    int64
+	IpAddress         string
+	PrefixLength      int64
+	SubnetMaskAddress string
 }

@@ -63,7 +63,7 @@ func ipv4ToBinary(ipAddress net.IP) uint32 {
 	return long
 }
 
-func subnetMaskFromCidrNumber(value byte) IP4 {
+func getMask(value byte) IP4 {
 	return IP4(0xFFFFFFFF << (32 - value))
 }
 
@@ -72,14 +72,14 @@ func newIP4(a, b, c, d byte) IP4 {
 }
 
 func minIP(ip IP4, cidrNumber byte) IP4 {
-	return IP4(ip & subnetMaskFromCidrNumber(cidrNumber))
+	return IP4(ip & getMask(cidrNumber))
 }
 
 func maxIP(ip IP4, cidrNumber byte) IP4 {
-	var mask = subnetMaskFromCidrNumber(cidrNumber)
+	var mask = getMask(cidrNumber)
 	return IP4(ip&mask | (0xFFFFFFFF ^ mask))
 }
 
 func ipCount(cidrNumber byte) uint32 {
-	return 0xFFFFFFFF ^ uint32(subnetMaskFromCidrNumber(cidrNumber)) + 1
+	return 0xFFFFFFFF ^ uint32(getMask(cidrNumber)) + 1
 }

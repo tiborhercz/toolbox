@@ -91,6 +91,6 @@ func maxIP(ip IP4, cidrNumber byte) IP4 {
 	return IP4(ip&mask | inverse(mask))
 }
 
-func ipCount(cidrNumber byte) uint32 {
-	return 0xFFFFFFFF ^ uint32(inverse(getMask(cidrNumber))) + 1
+func ipCount(prefix byte) uint32 {
+	return uint32(inverse(getMask(prefix))) + 1
 }

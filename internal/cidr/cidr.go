@@ -1,6 +1,7 @@
 package cidr
 
 import (
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
 	"github.com/tiborhercz/cli-toolbox/pkg/ipv4"
@@ -100,7 +101,7 @@ func getCidrNumberFromIp(ipNetAddress string) byte {
 }
 
 func processIpv4(cidrNumber byte, ipAddress net.IP) {
-	IPv4Data.TotalIpAddresses = strconv.Itoa(int(ipv4.GetTotalCidrIpAddresses(cidrNumber)))
+	IPv4Data.TotalIpAddresses = fmt.Sprint(ipv4.GetTotalCidrIpAddresses(cidrNumber))
 	IPv4Data.SubnetMask = ipv4.GetSubnetMask(cidrNumber)
 
 	if ipAddress != nil && cidrNumber >= 8 {

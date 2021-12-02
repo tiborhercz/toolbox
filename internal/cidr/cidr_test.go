@@ -1,6 +1,8 @@
 package cidr
 
 import (
+	"bytes"
+	"encoding/hex"
 	"testing"
 )
 
@@ -34,12 +36,19 @@ func TestIpv6ParseIpAddress(t *testing.T) {
 	}
 }
 
-func TestGetIpNetworkSize(t *testing.T) {
-	value := "192.168.0.0/32"
-	test := int64(32)
-	networkSize := getIpNetworkSize(value)
+func TestParseIpMask(t *testing.T) {
+	value, _ := hex.DecodeString("ffffff00")
+	ipMask := parseIpMask("255.255.255.0")
 
-	if networkSize != test {
-		t.Fatalf("networkSize is %v expected %v", networkSize, test)
+	if !bytes.Equal(value, ipMask) {
+		t.Fatalf("ipMask is %v expected %v", ipMask, "ffffff00")
+	}
+}
+
+func TestGetCidrNumberFromIp(t *testing.T) {
+	cidrNumber := getCidrNumberFromIp("192.168.0.0/16")
+
+	if cidrNumber != 16 {
+		t.Fatalf("cidrNumber is %v expected %v", cidrNumber, 16)
 	}
 }

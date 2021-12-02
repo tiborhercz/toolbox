@@ -100,7 +100,7 @@ func getCidrNumberFromIp(ipNetAddress string) byte {
 }
 
 func processIpv4(cidrNumber byte, ipAddress net.IP) {
-	IPv4Data.TotalIpAddresses = strconv.Itoa(ipv4.GetTotalCidrIpAddresses(cidrNumber))
+	IPv4Data.TotalIpAddresses = strconv.Itoa(int(ipv4.GetTotalCidrIpAddresses(cidrNumber)))
 	IPv4Data.SubnetMask = ipv4.GetSubnetMask(cidrNumber)
 
 	if ipAddress != nil && cidrNumber >= 8 {

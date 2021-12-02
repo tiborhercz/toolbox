@@ -11,13 +11,15 @@ type IP4 uint32
 
 type IP4Chan chan IP4
 
+const allOnes = IP4(0xFFFFFFFF)
+
 func GetTotalCidrIpAddresses(cidrNumber byte) uint32 {
 	return ipCount(cidrNumber)
 }
 
 func GetFirstLastIp(ipAddress net.IP, cidrNumber byte) (string, string) {
-	firstIp := minIP(IP4(ipv4ToBinary(ipAddress)), cidrNumber)
-	lastIp := maxIP(IP4(ipv4ToBinary(ipAddress)), cidrNumber)
+	firstIp := minIP(ipv4ToBinary(ipAddress), cidrNumber)
+	lastIp := maxIP(ipv4ToBinary(ipAddress), cidrNumber)
 
 	return firstIp.String(), lastIp.String()
 }
@@ -50,21 +52,30 @@ func IP4s(ip IP4, cidrNumber byte) IP4Chan {
 	return c
 }
 
-func (ip IP4) String() string {
+func (ip IP4) To4() [4]byte {
 	var result [4]byte
 	binary.BigEndian.PutUint32(result[:], uint32(ip))
-	return fmt.Sprintf("%v.%v.%v.%v", result[0], result[1], result[2], result[3])
+	return result
 }
 
-func ipv4ToBinary(ipAddress net.IP) uint32 {
-	var long uint32
-	binary.Read(bytes.NewBuffer(net.ParseIP(ipAddress.String()).To4()), binary.BigEndian, &long)
+func (ip IP4) String() string {
+	arr := ip.To4()
+	return fmt.Sprintf("%v.%v.%v.%v", arr[0], arr[1], arr[2], arr[3])
+}
 
-	return long
+func ipv4ToBinary(ipAddress net.IP) IP4 {
+	var IPv4 IP4
+	binary.Read(bytes.NewBuffer(net.ParseIP(ipAddress.String()).To4()), binary.BigEndian, &IPv4)
+
+	return IPv4
 }
 
 func getMask(value byte) IP4 {
-	return IP4(0xFFFFFFFF << (32 - value))
+	return IP4(allOnes << (32 - value))
+}
+
+func inverse(ip IP4) IP4 {
+	return IP4(uint32(allOnes) ^ uint32(ip))
 }
 
 func newIP4(a, b, c, d byte) IP4 {
@@ -77,9 +88,9 @@ func minIP(ip IP4, cidrNumber byte) IP4 {
 
 func maxIP(ip IP4, cidrNumber byte) IP4 {
 	var mask = getMask(cidrNumber)
-	return IP4(ip&mask | (0xFFFFFFFF ^ mask))
+	return IP4(ip&mask | inverse(mask))
 }
 
 func ipCount(cidrNumber byte) uint32 {
-	return 0xFFFFFFFF ^ uint32(getMask(cidrNumber)) + 1
+	return 0xFFFFFFFF ^ uint32(inverse(getMask(cidrNumber))) + 1
 }

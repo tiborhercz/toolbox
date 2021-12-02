@@ -1,40 +1,85 @@
 package ipv4
 
 import (
-	"math"
+	"bytes"
+	"encoding/binary"
+	"fmt"
 	"net"
 )
 
-func GetTotalCidrIpAddresses(cidrNumber byte) int {
-	return calculateTotalIpAddresses(cidrNumber)
+type IP4 uint32
+
+type IP4Chan chan IP4
+
+func GetTotalCidrIpAddresses(cidrNumber byte) uint32 {
+	return ipCount(cidrNumber)
 }
 
 func GetFirstLastIp(ipAddress net.IP, cidrNumber byte) (string, string) {
-	firstIp, lastIp := generateFirstLastIp(ipAddress, cidrNumber)
+	firstIp := minIP(IP4(ipv4ToBinary(ipAddress)), cidrNumber)
+	lastIp := maxIP(IP4(ipv4ToBinary(ipAddress)), cidrNumber)
 
-	return net.IP(firstIp).String(), net.IP(lastIp).String()
+	return firstIp.String(), lastIp.String()
 }
 
-func generateFirstLastIp(ipAddress net.IP, cidrNumber byte) ([]byte, []byte) {
-	subnetMask := cidrNumberToSubnetMask(cidrNumber)
-	firstIp := make([]byte, 4)
-	lastIp := make([]byte, 4)
-	octetPos := int(math.Floor(float64(cidrNumber) / float64(8)))
-
-	for i, address := range ipAddress.To4() {
-		if i >= octetPos {
-			firstIp[i] = 0
-			lastIp[i] = 255 - subnetMask[i] // TODO does not work for higher cidrNumber
-		} else {
-			firstIp[i] = address
-			lastIp[i] = address
-		}
+func (f IP4Chan) Next() *IP4 {
+	c, ok := <-f
+	if !ok {
+		return nil
 	}
-
-	return firstIp, lastIp
+	return &c
 }
 
-// calculateTotalIpAddresses Subtract the number of network bits from 32. Raise 2 to that power.
-func calculateTotalIpAddresses(cidrNumber byte) int {
-	return int(math.Pow(2, float64(32 - cidrNumber)))
+func IP4s(ip IP4, cidrNumber byte) IP4Chan {
+	c := make(chan IP4)
+	a := minIP(ip, cidrNumber)
+	limit := ipCount(cidrNumber)
+	fmt.Println("limit")
+	fmt.Println(limit)
+	go func() {
+		for {
+			if limit == 0 {
+				close(c)
+				return
+			}
+			c <- a
+			a = IP4(uint32(a) + 1)
+			limit--
+		}
+	}()
+	return c
+}
+
+func (ip IP4) String() string {
+	var result [4]byte
+	binary.BigEndian.PutUint32(result[:], uint32(ip))
+	return fmt.Sprintf("%v.%v.%v.%v", result[0], result[1], result[2], result[3])
+}
+
+func ipv4ToBinary(ipAddress net.IP) uint32 {
+	var long uint32
+	binary.Read(bytes.NewBuffer(net.ParseIP(ipAddress.String()).To4()), binary.BigEndian, &long)
+
+	return long
+}
+
+func subnetMaskFromCidrNumber(value byte) IP4 {
+	return IP4(0xFFFFFFFF << (32 - value))
+}
+
+func newIP4(a, b, c, d byte) IP4 {
+	return IP4(uint32(a)<<24 | uint32(b)<<16 | uint32(c)<<8 | uint32(d))
+}
+
+func minIP(ip IP4, cidrNumber byte) IP4 {
+	return IP4(ip & subnetMaskFromCidrNumber(cidrNumber))
+}
+
+func maxIP(ip IP4, cidrNumber byte) IP4 {
+	var mask = subnetMaskFromCidrNumber(cidrNumber)
+	return IP4(ip&mask | (0xFFFFFFFF ^ mask))
+}
+
+func ipCount(cidrNumber byte) uint32 {
+	return 0xFFFFFFFF ^ uint32(subnetMaskFromCidrNumber(cidrNumber)) + 1
 }

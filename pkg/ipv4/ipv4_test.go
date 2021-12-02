@@ -9,7 +9,7 @@ func TestIpCount(t *testing.T) {
 	testTotalIpCount := uint32(131072)
 	totalIpCount := ipCount(cidr)
 
-	if testTotalIpCount == totalIpCount {
+	if testTotalIpCount != totalIpCount {
 		t.Fatalf("totalIpCount is %v expected %v", totalIpCount, testTotalIpCount)
 	}
 }

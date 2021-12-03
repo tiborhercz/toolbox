@@ -9,8 +9,8 @@ before:
 builds:
   - main: ./main.go
     binary: cli-toolbox
-    goos: ["linux", "darwin", "windows"]
-    goarch: ["386", "amd64"]
+    goos: [ "linux", "darwin", "windows" ]
+    goarch: [ "386", "amd64" ]
     ldflags:
       - -s -w -X "github.com/tiborhercz/cli-toolbox/cmd.version={{.Version}}"
     env:

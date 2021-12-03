@@ -11,20 +11,19 @@ import (
 )
 
 var (
-	IPv4Data = model.IPv4OutputData {}
+	IPv4Data = model.IPv4OutputData{}
 )
 
 func IpAddress(ipAddress string) {
 	var (
-		parsedIpAddress net.IP
+		parsedIpAddress    net.IP
 		parsedIpNetAddress net.IPNet
-		cidrNumber byte
+		cidrNumber         byte
 	)
 
 	parsedIpAddress, parsedIpNetAddress = parseIpAddress(ipAddress)
 	cidrNumber = getCidrNumberFromIp(parsedIpNetAddress.String())
 	IPv4Data.CidrRange = parsedIpNetAddress.String()
-
 
 	if parsedIpAddress != nil {
 		processIpv4(cidrNumber, parsedIpAddress)

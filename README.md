@@ -3,9 +3,11 @@
 A handy collection of cli tools
 
 ## Installation
+
 Install instructions
 
 ### Binary
+
 Get the binary from the [GitHub release page](https://github.com/tiborhercz/cli-toolbox/releases)
 
 ### Brew
@@ -16,11 +18,13 @@ brew install cli-toolbox
 ```
 
 ## Usage
+
 ```
 cli-toolbox [command]
 ```
 
 ### Base64
+
 ```
 Encode and decode base64 strings
 
@@ -36,6 +40,7 @@ Flags:
 ```
 
 ### Jwtdecode
+
 ```
 Decode jwt token
 
@@ -48,6 +53,7 @@ Flags:
 ```
 
 ### cidr
+
 ```
 Calculate IPv4 and IPv6 CIDR ranges
 

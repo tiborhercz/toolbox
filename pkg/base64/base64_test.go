@@ -17,7 +17,7 @@ func TestBase64Encode(t *testing.T) {
 func TestBase64Decode(t *testing.T) {
 	value := "VGhpcyBpcyBhIHRlc3QgdmFsdWU="
 	test := "This is a test value"
-	decodedValue := decode(value)
+	decodedValue, _ := decode(value)
 
 	if decodedValue != test {
 		t.Fatalf("Encoded value should be 'VGhpcyBpcyBhIHRlc3QgdmFsdWU=' instead is %v", decodedValue)

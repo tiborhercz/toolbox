@@ -7,10 +7,11 @@ import (
 	"os"
 )
 
-func Process(value string, path string, optionDecode bool, urlEncoding bool) string {
+func Process(value string, path string, optionDecode bool, urlEncoding bool) (string, error) {
 	var (
 		data            = value
 		processedString string
+		err             error
 	)
 
 	if path != "" {
@@ -20,10 +21,13 @@ func Process(value string, path string, optionDecode bool, urlEncoding bool) str
 	if optionDecode == false {
 		processedString = encode(data, urlEncoding)
 	} else {
-		processedString = decode(data)
+		processedString, err = decode(data)
+		if err != nil {
+			return "", err
+		}
 	}
 
-	return processedString
+	return processedString, nil
 }
 
 func getFileContent(path string) string {
@@ -36,12 +40,13 @@ func getFileContent(path string) string {
 	return string(data)
 }
 
-func decode(value string) string {
+func decode(value string) (string, error) {
 	var decodedString []byte
+	var err error
 
-	decodedString, _ = b64.StdEncoding.DecodeString(value)
+	decodedString, err = b64.StdEncoding.DecodeString(value)
 
-	return string(decodedString)
+	return string(decodedString), err
 }
 
 func encode(value string, urlencoding bool) string {

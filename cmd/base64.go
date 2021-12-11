@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
 	"github.com/tiborhercz/cli-toolbox/pkg/base64"
@@ -20,7 +21,12 @@ var (
 				os.Exit(1)
 			}
 
-			fmt.Println(base64.Process(base64Options.Value, base64Options.Path, base64Options.Decode, base64Options.Urlencoding))
+			v, err := base64.Process(base64Options.Value, base64Options.Path, base64Options.Decode, base64Options.Urlencoding)
+			if err != nil {
+				logrus.Fatal(err)
+			}
+
+			fmt.Println(v)
 		},
 	}
 )

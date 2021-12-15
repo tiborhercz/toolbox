@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
 	"github.com/tiborhercz/cli-toolbox/pkg/base64"
+	"io/ioutil"
 	"os"
 )
 
@@ -21,7 +22,13 @@ var (
 				os.Exit(1)
 			}
 
-			v, err := base64.Process(base64Options.Value, base64Options.Path, base64Options.Decode, base64Options.Urlencoding)
+			value := base64Options.Value
+
+			if base64Options.Path != "" {
+				value = getFileContent(base64Options.Path)
+			}
+
+			v, err := base64.Process(value, base64Options.Decode, base64Options.Urlencoding)
 			if err != nil {
 				logrus.Fatal(err)
 			}
@@ -37,4 +44,14 @@ func init() {
 	base64Cmd.Flags().StringVarP(&base64Options.Value, "value", "v", "", "Value string")
 	base64Cmd.Flags().BoolVarP(&base64Options.Decode, "decode", "d", false, "Decode")
 	base64Cmd.Flags().BoolVarP(&base64Options.Urlencoding, "urlencoding", "u", false, "URLEncoding is the alternate base64 encoding defined in RFC 4648. It is typically used in URLs and file names.")
+}
+
+func getFileContent(path string) string {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println("File reading error", err)
+		os.Exit(1)
+	}
+
+	return string(data)
 }

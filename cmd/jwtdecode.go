@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/jwtdecode"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
+	"github.com/tiborhercz/cli-toolbox/pkg/jwtdecode"
+	"log"
 )
 
 var (
@@ -13,7 +15,12 @@ var (
 		Use:   "jwtdecode",
 		Short: "Decode jwt token",
 		Run: func(cmd *cobra.Command, args []string) {
-			jwtdecode.Process(jwtOptions.Value)
+			jwtString, err := jwtdecode.Process(jwtOptions.Value)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			logrus.Info("\n" + jwtString)
 		},
 	}
 )

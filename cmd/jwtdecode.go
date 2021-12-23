@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/tiborhercz/cli-toolbox/internal/model"
@@ -15,12 +17,15 @@ var (
 		Use:   "jwtdecode",
 		Short: "Decode jwt token",
 		Run: func(cmd *cobra.Command, args []string) {
-			jwtString, err := jwtdecode.Process(jwtOptions.Value)
+			jwtData, err := jwtdecode.Process(jwtOptions.Value)
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			logrus.Info("\n" + jwtString)
+			for _, value := range jwtData {
+				prettyJson, _ := prettifyJson(value)
+				logrus.Infof("\n%v", prettyJson)
+			}
 		},
 	}
 )
@@ -28,4 +33,14 @@ var (
 func init() {
 	rootCmd.AddCommand(jwtdecodeCmd)
 	jwtdecodeCmd.Flags().StringVarP(&jwtOptions.Value, "value", "v", "", "Value string")
+}
+
+func prettifyJson(value []byte) (string, error) {
+	var prettyJSON bytes.Buffer
+	err := json.Indent(&prettyJSON, value, "", "\t")
+	if err != nil {
+		return "", err
+	}
+
+	return prettyJSON.String(), nil
 }

@@ -16,3 +16,13 @@ type CidrOptions struct {
 	PrefixLength      int64
 	SubnetMaskAddress string
 }
+
+type PasswordOptions struct {
+	Password  string
+	Algorithm string
+	Cost      int
+}
+
+type HashOptions struct {
+	Algorithm string
+}

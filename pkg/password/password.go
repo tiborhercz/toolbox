@@ -1,10 +1,5 @@
 package password
 
-type Password interface {
-	Hash(password []byte, cost int) (string, error)
-	Verify([]byte, int) (string, error)
-}
-
 func SupportedHashingAlgorithms() string {
 	return "bcrypt"
 }

@@ -48,8 +48,8 @@ var (
 )
 
 func init() {
-	rootCmd.AddCommand(passwordCmd)
-	passwordCmd.AddCommand(passwordHashCmd, passwordVerifyCmd)
+	//rootCmd.AddCommand(passwordCmd)
+	//passwordCmd.AddCommand(passwordHashCmd, passwordVerifyCmd)
 	passwordVerifyCmd.Flags().StringVarP(&passwordOptions.Algorithm, "algorithm", "a", "bcrypt", "Algorithm. Supported algorithms: "+password.SupportedHashingAlgorithms())
 
 	passwordHashCmd.Flags().StringVarP(&passwordOptions.Algorithm, "algorithm", "a", "bcrypt", "Algorithm. Supported algorithms: "+password.SupportedHashingAlgorithms())

@@ -2,6 +2,11 @@ package password
 
 import "golang.org/x/crypto/bcrypt"
 
+type Password interface {
+	Hash(password []byte, cost int) (string, error)
+	Verify([]byte, int) (string, error)
+}
+
 type Bcrypt struct {
 	Password
 }

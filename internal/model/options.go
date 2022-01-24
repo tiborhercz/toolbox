@@ -5,3 +5,13 @@ type Base64Options struct {
 	Decode      bool
 	Urlencoding bool
 }
+
+type PasswordOptions struct {
+	Password  string
+	Algorithm string
+	Cost      int
+}
+
+type HashOptions struct {
+	Algorithm string
+}

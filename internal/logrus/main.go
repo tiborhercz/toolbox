@@ -1,5 +1,9 @@
-package main
+package logrus
 
-func main() {
+import "github.com/sirupsen/logrus"
 
+func SetOptions() {
+	logrus.SetFormatter(&logrus.TextFormatter{
+		DisableTimestamp: true,
+	})
 }

@@ -45,6 +45,7 @@ jobs:
           path: main.wasm
 
   build-go:
+    needs: ['build-vue', 'build-wasm']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

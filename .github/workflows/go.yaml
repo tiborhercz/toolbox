@@ -86,5 +86,11 @@ jobs:
 
       - name: Generate
         run: go generate -v ./...
+
       - name: Build
         run: go build -v .
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: cli-toolbox
+          path: ./cli-toolbox

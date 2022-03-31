@@ -13,9 +13,11 @@ jobs:
       - uses: actions/setup-node@master
 
       - name: Installing node project dependencies
+        working-directory: ./static
         run: npm install
 
       - name: Building the project
+        working-directory: ./static
         run: npm run build
 
       - name: Upload artifact for deployment jobs
@@ -36,7 +38,7 @@ jobs:
         with:
           go-version: 1.18
       - name: Build wasm
-        run: GOOS=js GOARCH=wasm go build -o main.wasm wasm/main.go
+        run: GOOS=js GOARCH=wasm go build -o main.wasm wasm/*.go
       - uses: actions/upload-artifact@master
         with:
           name: go-wasm

@@ -89,8 +89,3 @@ jobs:
 
       - name: Build
         run: go build -v .
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: cli-toolbox
-          path: ./cli-toolbox

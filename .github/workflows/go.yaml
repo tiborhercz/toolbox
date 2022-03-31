@@ -3,7 +3,30 @@ name: Build
 on: [ push, pull_request ]
 
 jobs:
-  build:
+  build-vue:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '14' ]
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+
+      - name: Installing node project dependencies
+        run: npm install
+
+      - name: Building the project
+        run: npm run build
+
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: vue-frontend
+          path: |
+            dist/
+            !node_modules/
+
+  build-wasm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,7 +34,34 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17
+          go-version: 1.18
+      - name: Build wasm
+        run: GOOS=js GOARCH=wasm go build -o main.wasm wasm/main.go
+      - uses: actions/upload-artifact@master
+        with:
+          name: go-wasm
+          path: main.wasm
+
+  build-go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - uses: actions/download-artifact@master
+        with:
+          name: vue-frontend
+          path: static/dist
+
+      - uses: actions/download-artifact@master
+        with:
+          name: go-wasm
+          path: static/dist
+
       - name: Generate
         run: go generate -v ./...
       - name: Build

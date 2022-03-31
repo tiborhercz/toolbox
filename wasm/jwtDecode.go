@@ -34,8 +34,6 @@ func processJwtDecode(this js.Value, args []js.Value) any {
 		Payload: jwtPayload,
 	}
 
-	fmt.Println(JwtResponse)
-
 	jsonData, err := json.Marshal(JwtResponse)
 
 	if err != nil {

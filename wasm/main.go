@@ -11,6 +11,7 @@ func main() {
 	global := js.Global()
 	global.Set("wasmBase64", js.FuncOf(processBase64))
 	global.Set("wasmJwtDecode", js.FuncOf(processJwtDecode))
+	global.Set("wasmIpv4Cidr", js.FuncOf(processIpv4))
 	<-done
 }
 

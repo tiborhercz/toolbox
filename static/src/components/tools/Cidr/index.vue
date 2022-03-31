@@ -72,7 +72,6 @@
 
 <script>
 import { validateIpv4Cidr, validIpv4 } from '@/utils'
-import Ipv4Api from '@/api/ipv4'
 
 const DEFAULT_ITEMS = ['0.0.0.0/8', '0.0.0.0/16', '0.0.0.0/24']
 
@@ -146,13 +145,15 @@ export default {
     },
   },
   methods: {
-    async getCidr() {
+    getCidr() {
       if (validateIpv4Cidr(this.value)) {
-        const { data } = await Ipv4Api.ipv4Cidr(this.value)
-        this.ipv4Data.subnetMask.value = data.data.subnetMask
-        this.ipv4Data.firstIp.value = data.data.firstIp
-        this.ipv4Data.lastIp.value = data.data.lastIp
-        this.ipv4Data.totalIpAddresses.value = data.data.totalIpAddresses
+        let data = wasmIpv4Cidr(this.value) // eslint-disable-line
+        data = JSON.parse(data)
+
+        this.ipv4Data.subnetMask.value = data.subnetMask
+        this.ipv4Data.firstIp.value = data.firstIp
+        this.ipv4Data.lastIp.value = data.lastIp
+        this.ipv4Data.totalIpAddresses.value = data.totalIpAddresses
       } else {
         this.error = true
         this.errorMessages.push(`${this.value} is not a valid ipv4 address with cidr. Example: 10.0.0.0/24`)

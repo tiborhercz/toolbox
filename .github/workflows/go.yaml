@@ -32,11 +32,11 @@ jobs:
       - uses: actions/setup-node@master
 
       - name: Installing node project dependencies
-        working-directory: ./static
+        working-directory: ./static/UI
         run: npm install
 
       - name: Building the project
-        working-directory: ./static
+        working-directory: ./static/UI
         run: npm run build
 
       - name: Upload artifact for deployment jobs
@@ -44,8 +44,8 @@ jobs:
         with:
           name: vue-frontend
           path: |
-            static/dist/
-            !static/node_modules/
+            static/UI/dist/
+            !static/UI/node_modules/
 
   build-wasm:
     runs-on: ubuntu-latest
@@ -77,12 +77,12 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: vue-frontend
-          path: static/dist
+          path: static/UI/dist
 
       - uses: actions/download-artifact@master
         with:
           name: go-wasm
-          path: static/dist
+          path: static/UI/dist
 
       - name: Generate
         run: go generate -v ./...

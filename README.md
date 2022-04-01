@@ -1,6 +1,7 @@
 # cli-toolbox
 
-A handy collection of cli tools
+A collection of various tools like base64 encoding, jwt decoding, ipv4 cidr calculation, and more.
+The tools can be accessed from the command line or by using the web UI.
 
 ## Installation
 
@@ -12,56 +13,44 @@ Get the binary from the [GitHub release page](https://github.com/tiborhercz/cli-
 
 ### Brew
 
-```
+```shell
 brew tap tiborhercz/cli-toolbox
 brew install cli-toolbox
 ```
+
+### Compile
+
+Compiling the binary yourself is possible, either manually or by using the make command.
+
+### Manual
+Steps to compile:
+1. Build the Wasm binary
+```shell
+GOOS=js GOARCH=wasm go build -o static/UI/public/main.wasm wasm/*.go
+```
+2. Build the Vue.js frontend. Run `npm run build` inside the `static/UI/public/` directory
+3. Run `go build .` in the root directory
+4. Run cli-toolbox with `./cli-toolbox`
+
+### Makefile
+To build the cli-toolbox run: `make build`
 
 ## Usage
 
 ```
 cli-toolbox [command]
+
+Available Commands:
+  base64      Encode and decode base64 strings
+  cidr        Calculate IPv4 CIDR ranges
+  completion  generate the autocompletion script for the specified shell
+  hash        Hash
+  help        Help about any command
+  jwtdecode   Decode jwt token
+  webui       Launch the web UI for the Toolbox
 ```
 
-### Base64
-
-```
-Encode and decode base64 strings
-
-Usage:
-  cli-toolbox base64 [flags]
-
-Flags:
-  -d, --decode         Decode
-  -h, --help           help for base64
-  -p, --path string    Path string
-  -u, --urlencoding    URLEncoding is the alternate base64 encoding defined in RFC 4648. It is typically used in URLs and file names.
-  -v, --value string   Value string
-```
-
-### Jwtdecode
-
-```
-Decode jwt token
-
-Usage:
-  cli-toolbox jwtdecode [flags]
-
-Flags:
-  -h, --help           help for jwtdecode
-  -v, --value string   Value string
-```
-
-### cidr
-
-```
-Calculate IPv4 and IPv6 CIDR ranges
-
-Usage:
-  cli-toolbox cidr [flags]
-
-Flags:
-  -c, --cidrprefix int     IpCidrPrefix default 64 (default 64)
-  -h, --help               help for cidr
-  -i, --ipaddress string   ip address
+### Launching the web UI
+```shell
+cli-toolbox webui
 ```

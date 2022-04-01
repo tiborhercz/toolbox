@@ -14,7 +14,7 @@ var (
 
 	webUICmd = &cobra.Command{
 		Use:   "webui",
-		Short: "Web server",
+		Short: "Launch the web UI for the Toolbox",
 		Run: func(cmd *cobra.Command, args []string) {
 			exitOnPortInUse("tcp4", webUIOptions.Port)
 

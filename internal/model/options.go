@@ -11,6 +11,10 @@ type JwtOptions struct {
 	Value string
 }
 
+type WebUIOptions struct {
+	Port string
+}
+
 type CidrOptions struct {
 	IpAddress         string
 	PrefixLength      int64

@@ -25,7 +25,7 @@ var (
 
 func init() {
 	rootCmd.AddCommand(webUICmd)
-	webUICmd.Flags().StringVarP(&webUIOptions.Port, "port", "p", "0", "Port number")
+	webUICmd.Flags().StringVarP(&webUIOptions.Port, "port", "p", "8000", "Port number")
 }
 
 func exitOnPortInUse(protocol string, port string) {

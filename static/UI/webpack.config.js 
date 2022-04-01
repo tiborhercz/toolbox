@@ -1,0 +1,40 @@
+const { VuetifyLoaderPlugin } = require('vuetify-loader')
+
+const path = require('path')
+const sass = require('sass')
+
+const vueSrc = './src'
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.s(c|a)ss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                        options: {
+                            implementation: sass,
+                            sassOptions: {
+                                indentedSyntax: true, // optional
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, vueSrc),
+            },
+            extensions: ['*', '.js', '.vue', '.json'],
+        },
+    },
+    plugins: [
+        new VuetifyLoaderPlugin({ styles: 'expose' }),
+        new VuetifyLoaderPlugin({ autoImport: true }), // Enabled by default
+    ],
+}

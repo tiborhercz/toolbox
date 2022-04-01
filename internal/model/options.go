@@ -12,6 +12,16 @@ type PasswordOptions struct {
 	Cost      int
 }
 
+type WebUIOptions struct {
+	Port string
+}
+
+type CidrOptions struct {
+	IpAddress         string
+	PrefixLength      int64
+	SubnetMaskAddress string
+}
+
 type HashOptions struct {
 	Algorithm string
 }

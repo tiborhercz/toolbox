@@ -1,7 +1,12 @@
-# cli-toolbox
+# Toolbox
 
-A collection of various tools like base64 encoding, jwt decoding, ipv4 cidr calculation, and more.
+A collection of various tools like encoding, decoding, hashing, ipv4 cidr calculation, and more.
 The tools can be accessed from the command line or by using the web UI.
+
+A lot of tools like these are hosted online and use backend system to do the processing. 
+This means you don't know what they do with your sensitive data. Another downside of online tools is that they are littered with ads.
+
+This toolbox runs locally on your machine and all the processing is done in your browser using WebAssembly or JavaScript.
 
 ## Installation
 
@@ -54,3 +59,7 @@ Available Commands:
 ```shell
 cli-toolbox webui
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

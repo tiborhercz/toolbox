@@ -552,3 +552,5 @@
 		}
 	}
 })();
+
+export default globalThis.Go

@@ -26,6 +26,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Json" */ '../views/Json'),
   },
   {
+    path: '/hash',
+    name: 'hash',
+    component: () => import(/* webpackChunkName: "Hash" */ '../views/Hash'),
+  },
+  {
     path: '/base64',
     name: 'Base64',
     component: {

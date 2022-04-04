@@ -147,7 +147,7 @@ export default {
   methods: {
     getCidr() {
       if (validateIpv4Cidr(this.value)) {
-        let data = wasmIpv4(this.value) // eslint-disable-line
+        let data = wasmIpv4Process(this.value) // eslint-disable-line
         data = JSON.parse(data)
 
         this.ipv4Data.subnetMask.value = data.subnetMask

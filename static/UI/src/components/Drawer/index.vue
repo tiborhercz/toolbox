@@ -78,6 +78,11 @@ export default {
           icon: 'mdi-code-braces',
           to: '/json',
         },
+        {
+          title: 'Hash',
+          icon: 'mdi-pound',
+          to: '/hash',
+        },
       ],
     }
   },

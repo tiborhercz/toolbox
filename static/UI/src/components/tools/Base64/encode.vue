@@ -37,7 +37,7 @@ export default {
 
         try {
           if (newValue !== '') {
-            const data = wasmBase64(this.value, false, false) // eslint-disable-line
+            const data = wasmBase64Process(this.value, false, false) // eslint-disable-line
             this.$emit('response', data)
           } else {
             this.$emit('response', '')

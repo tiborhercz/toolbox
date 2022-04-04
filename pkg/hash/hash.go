@@ -15,6 +15,7 @@ import (
 	_ "golang.org/x/crypto/ripemd160"
 	_ "golang.org/x/crypto/sha3"
 	"sort"
+	"strings"
 )
 
 func GetSupportedHashingAlgorithms() []string {
@@ -60,7 +61,7 @@ func Execute(value []byte, algorithm string) (string, error) {
 		ha = hashAlgorithms()
 	)
 
-	if val, ok := ha[algorithm]; ok {
+	if val, ok := ha[strings.ToUpper(algorithm)]; ok {
 		return cryptoHash(value, val), nil
 	}
 

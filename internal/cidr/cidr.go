@@ -3,8 +3,8 @@ package cidr
 import (
 	"fmt"
 	"github.com/sirupsen/logrus"
-	"github.com/tiborhercz/cli-toolbox/internal/model"
-	"github.com/tiborhercz/cli-toolbox/pkg/ipv4"
+	"github.com/tiborhercz/toolbox/internal/model"
+	"github.com/tiborhercz/toolbox/pkg/ipv4"
 	"net"
 	"strconv"
 	"strings"

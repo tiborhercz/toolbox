@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/pkg/jwtdecode"
+	"github.com/tiborhercz/toolbox/pkg/jwtdecode"
 	"log"
 )
 

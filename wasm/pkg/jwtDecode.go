@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/tiborhercz/cli-toolbox/pkg/jwtdecode"
+	"github.com/tiborhercz/toolbox/pkg/jwtdecode"
 	"syscall/js"
 )
 

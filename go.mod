@@ -1,4 +1,4 @@
-module github.com/tiborhercz/cli-toolbox
+module github.com/tiborhercz/toolbox
 
 go 1.18
 

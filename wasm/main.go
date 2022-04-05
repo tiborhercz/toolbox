@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/tiborhercz/cli-toolbox/wasm/pkg"
+	"github.com/tiborhercz/toolbox/wasm/pkg"
 	"syscall/js"
 )
 

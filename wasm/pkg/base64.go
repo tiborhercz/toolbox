@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/tiborhercz/cli-toolbox/pkg/base64"
+	"github.com/tiborhercz/toolbox/pkg/base64"
 	"syscall/js"
 )
 

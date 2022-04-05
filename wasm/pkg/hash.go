@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/tiborhercz/cli-toolbox/pkg/hash"
+	"github.com/tiborhercz/toolbox/pkg/hash"
 	"syscall/js"
 )
 

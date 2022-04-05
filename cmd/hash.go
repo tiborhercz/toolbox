@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/model"
-	"github.com/tiborhercz/cli-toolbox/pkg/hash"
+	"github.com/tiborhercz/toolbox/internal/model"
+	"github.com/tiborhercz/toolbox/pkg/hash"
 	"strings"
 )
 

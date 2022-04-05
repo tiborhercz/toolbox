@@ -8,9 +8,9 @@ import (
 
 var (
 	rootCmd = &cobra.Command{
-		Use:   "cli-toolbox",
-		Short: "cli toolbox",
+		Use: "toolbox",
 		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(toolboxArt())
 			cmd.Help()
 		},
 	}
@@ -21,4 +21,17 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func toolboxArt() string {
+	return `
+ ________                   __ __                         
+|        \                 |  \  \                        
+ \▓▓▓▓▓▓▓▓ ______   ______ | ▓▓ ▓▓____   ______  __    __ 
+   | ▓▓   /      \ /      \| ▓▓ ▓▓    \ /      \|  \  /  \
+   | ▓▓  |  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\ ▓▓ ▓▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\/  ▓▓
+   | ▓▓  | ▓▓  | ▓▓ ▓▓  | ▓▓ ▓▓ ▓▓  | ▓▓ ▓▓  | ▓▓ >▓▓  ▓▓ 
+   | ▓▓  | ▓▓__/ ▓▓ ▓▓__/ ▓▓ ▓▓ ▓▓__/ ▓▓ ▓▓__/ ▓▓/  ▓▓▓▓\ 
+   | ▓▓   \▓▓    ▓▓\▓▓    ▓▓ ▓▓ ▓▓    ▓▓\▓▓    ▓▓  ▓▓ \▓▓\
+    \▓▓    \▓▓▓▓▓▓  \▓▓▓▓▓▓ \▓▓\▓▓▓▓▓▓▓  \▓▓▓▓▓▓ \▓▓   \▓▓`
 }

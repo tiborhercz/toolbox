@@ -14,13 +14,13 @@ Install instructions
 
 ### Binary
 
-Get the binary from the [GitHub release page](https://github.com/tiborhercz/cli-toolbox/releases)
+Get the binary from the [GitHub release page](https://github.com/tiborhercz/toolbox/releases)
 
 ### Brew
 
 ```shell
-brew tap tiborhercz/cli-toolbox
-brew install cli-toolbox
+brew tap tiborhercz/toolbox
+brew install toolbox
 ```
 
 ### Compile
@@ -35,15 +35,15 @@ GOOS=js GOARCH=wasm go build -o static/UI/public/main.wasm wasm/*.go
 ```
 2. Build the Vue.js frontend. Run `npm run build` inside the `static/UI/public/` directory
 3. Run `go build .` in the root directory
-4. Run cli-toolbox with `./cli-toolbox`
+4. Run toolbox with `./toolbox`
 
 ### Makefile
-To build the cli-toolbox run: `make build`
+To build the toolbox run: `make build`
 
 ## Usage
 
 ```
-cli-toolbox [command]
+toolbox [command]
 
 Available Commands:
   base64      Encode and decode base64 strings
@@ -57,7 +57,7 @@ Available Commands:
 
 ### Launching the web UI
 ```shell
-cli-toolbox webui
+toolbox webui
 ```
 
 ## License

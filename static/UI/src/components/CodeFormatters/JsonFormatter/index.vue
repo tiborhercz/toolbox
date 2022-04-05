@@ -1,11 +1,13 @@
 <template>
   <div>
+<!--eslint-disable-->
 <pre v-bind:ref="'prism'">
 <code
   class="language-json"
   v-text="content"
 />
 </pre>
+  <!--eslint-enable-->
   </div>
 </template>
 

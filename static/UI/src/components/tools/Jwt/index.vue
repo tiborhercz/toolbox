@@ -18,6 +18,15 @@
             outlined
           />
         </v-col>
+        <v-col>
+          <v-btn
+            v-on:click="fillExampleJwt"
+          >
+            Example JWT
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col
           cols="12"
           md="7"
@@ -66,6 +75,7 @@ export default {
       value: '',
       headerValue: '',
       payloadValue: '',
+      exampleJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
       error: false,
       errorMessages: [],
     }
@@ -99,6 +109,9 @@ export default {
     },
   },
   methods: {
+    fillExampleJwt() {
+      this.inputValue = this.exampleJwt
+    },
     copyText(value) {
       navigator.clipboard.writeText(value)
     },

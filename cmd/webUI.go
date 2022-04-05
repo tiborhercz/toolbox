@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/model"
-	"github.com/tiborhercz/cli-toolbox/static"
+	"github.com/tiborhercz/toolbox/internal/model"
+	"github.com/tiborhercz/toolbox/static"
 	"net"
 	"os"
 )

@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/tiborhercz/cli-toolbox/internal/cidr"
+	"github.com/tiborhercz/toolbox/internal/cidr"
 )
 
 var (

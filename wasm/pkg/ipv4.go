@@ -3,8 +3,8 @@ package pkg
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tiborhercz/cli-toolbox/internal/utils"
-	"github.com/tiborhercz/cli-toolbox/pkg/ipv4"
+	"github.com/tiborhercz/toolbox/internal/utils"
+	"github.com/tiborhercz/toolbox/pkg/ipv4"
 	"syscall/js"
 )
 

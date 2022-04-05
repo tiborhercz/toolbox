@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/tiborhercz/cli-toolbox/cmd"
-	"github.com/tiborhercz/cli-toolbox/internal/logrus"
+	"github.com/tiborhercz/toolbox/cmd"
+	"github.com/tiborhercz/toolbox/internal/logrus"
 )
 
 func main() {

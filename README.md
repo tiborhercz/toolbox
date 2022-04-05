@@ -43,7 +43,7 @@ To build the toolbox run: `make build`
 ## Usage
 
 ```
-cli-toolbox [command]
+toolbox [command]
 
 Available Commands:
   base64      Encode and decode base64 strings
@@ -57,7 +57,7 @@ Available Commands:
 
 ### Launching the web UI
 ```shell
-cli-toolbox webui
+toolbox webui
 ```
 
 ## License

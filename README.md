@@ -1,4 +1,4 @@
-<p align="center"><img src=".github/toolbox.png" height="80" alt="Project Logo"></p>
+<p align="center"><img src=".github/toolbox.png" height="60" alt="Project Logo"></p>
 <h3 align="center">Toolbox</h3>
 <p align="center">A collection of various tools for developers, engineers and programmers</p>
 <p align="center">

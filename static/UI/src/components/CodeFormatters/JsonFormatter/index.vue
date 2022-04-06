@@ -35,6 +35,7 @@ export default {
       try {
         jsonValue = JSON.stringify(JSON.parse(jsonValue), null, 4)
 
+        this.$emit('formattedJson', jsonValue)
         return jsonValue
       } catch (e) {
         if (this.json !== '') {

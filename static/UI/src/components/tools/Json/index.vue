@@ -27,11 +27,12 @@
           <h2>Formatted JSON</h2>
           <json-formatter
             v-bind:json="inputValue"
+            v-on:formattedJson="setFormattedJson"
             v-on:errorMessage="setErrorMessage"
           />
           <basic-button
             v-bind:label="'copy'"
-            v-bind:copy-value="inputValue"
+            v-bind:copy-value="formattedJson"
           />
         </v-col>
       </v-row>
@@ -53,6 +54,7 @@ export default {
   data() {
     return {
       value: '',
+      formattedJson: {},
       error: false,
       errorMessages: [],
     }
@@ -70,6 +72,9 @@ export default {
     },
   },
   methods: {
+    setFormattedJson(json) {
+      this.formattedJson = json
+    },
     setErrorMessage(errorMessage) {
       this.error = true
       this.errorMessages.push(errorMessage)

@@ -13,7 +13,7 @@ type JwtResponse struct {
 	Payload string `json:"payload"`
 }
 
-func ProcessJwtDecode(this js.Value, args []js.Value) any {
+func ProcessJwtDecode(this js.Value, args []js.Value) interface{} {
 	jwtData, err := jwtdecode.Process(args[0].String())
 	if err != nil {
 		return ""

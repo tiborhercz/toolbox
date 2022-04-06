@@ -15,7 +15,7 @@ type Ipv4CidrResponse struct {
 	TotalIpAddresses string `json:"totalIpAddresses"`
 }
 
-func ProcessIpv4(this js.Value, args []js.Value) any {
+func ProcessIpv4(this js.Value, args []js.Value) interface{} {
 	response := Ipv4CidrResponse{}
 	ipv4Address := args[0].String()
 	fmt.Println(ipv4Address)

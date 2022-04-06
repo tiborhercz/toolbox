@@ -6,7 +6,7 @@ import (
 	"syscall/js"
 )
 
-func GetSupportedHashingAlgorithms(this js.Value, args []js.Value) any {
+func GetSupportedHashingAlgorithms(this js.Value, args []js.Value) interface{} {
 	var algorithms = hash.GetSupportedHashingAlgorithms()
 
 	a := make([]interface{}, len(algorithms))
@@ -17,7 +17,7 @@ func GetSupportedHashingAlgorithms(this js.Value, args []js.Value) any {
 	return a
 }
 
-func Hash(this js.Value, args []js.Value) any {
+func Hash(this js.Value, args []js.Value) interface{} {
 	hash, err := hash.Execute([]byte(args[0].String()), args[1].String())
 	if err != nil {
 		return fmt.Sprint(err)

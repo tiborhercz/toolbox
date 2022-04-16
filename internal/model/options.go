@@ -7,9 +7,10 @@ type Base64Options struct {
 }
 
 type PasswordOptions struct {
-	Password  string
-	Algorithm string
-	Cost      int
+	Password       string
+	HashedPassword string
+	Algorithm      string
+	Cost           int
 }
 
 type WebUIOptions struct {

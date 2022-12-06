@@ -1,10 +1,9 @@
 package cmd
 
 import (
-	"bytes"
-	"encoding/json"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/tiborhercz/toolbox/internal/utils"
 	"github.com/tiborhercz/toolbox/pkg/jwtdecode"
 	"log"
 )
@@ -24,7 +23,7 @@ var (
 			}
 
 			for _, value := range jwtData {
-				prettyJson, _ := prettifyJson(value)
+				prettyJson, _ := utils.PrettifyJson(value)
 				logrus.Infof("\n%v", prettyJson)
 			}
 		},
@@ -33,14 +32,4 @@ var (
 
 func init() {
 	rootCmd.AddCommand(jwtdecodeCmd)
-}
-
-func prettifyJson(value []byte) (string, error) {
-	var prettyJSON bytes.Buffer
-	err := json.Indent(&prettyJSON, value, "", "\t")
-	if err != nil {
-		return "", err
-	}
-
-	return prettyJSON.String(), nil
 }

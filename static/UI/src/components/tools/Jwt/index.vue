@@ -32,7 +32,7 @@
           md="7"
         >
           <h2>JWT Header</h2>
-          <json-formatter v-bind:json="headerValue" />
+          <json-formatter v-bind:value="headerValue" />
           <basic-button
             v-bind:label="'copy'"
             v-bind:copy-value="headerValue"
@@ -43,7 +43,7 @@
           md="7"
         >
           <h2>JWT Payload</h2>
-          <json-formatter v-bind:json="payloadValue" />
+          <json-formatter v-bind:value="payloadValue" />
           <basic-button
             v-bind:label="'copy'"
             v-bind:copy-value="payloadValue"

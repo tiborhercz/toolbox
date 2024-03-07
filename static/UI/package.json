@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "core-js": "^3.6.5",
+    "js-yaml": "^4.1.0",
     "json-beautify": "^1.1.1",
+    "json-to-pretty-yaml": "^1.2.2",
     "prismjs": "^1.25.0",
     "vue": "^2.6.14",
     "vue-router": "^3.5.0",

@@ -3,7 +3,7 @@
 <!--eslint-disable-->
 <pre v-bind:ref="'prism'">
 <code
-  class="language-json"
+  class="language-yaml"
   v-text="content"
 />
 </pre>
@@ -13,10 +13,10 @@
 
 <script>
 import Prism from 'prismjs'
-import 'prismjs/components/prism-json'
+import 'prismjs/components/prism-yaml'
 
 export default {
-  name: 'JsonFormatter',
+  name: 'YamlFormatter',
   components: {},
   props: {
     indent: {
@@ -30,23 +30,19 @@ export default {
   },
   computed: {
     content() {
-      let jsonValue = this.value
-
       this.$nextTick(() => {
         Prism.highlightAllUnder(this.$refs.prism)
       })
 
       try {
-        jsonValue = JSON.stringify(JSON.parse(jsonValue), null, this.getIndentValue())
-
-        this.$emit('formattedValue', jsonValue)
-        return jsonValue
+        this.$emit('formattedValue', this.value)
+        return this.value
       } catch (e) {
         if (this.value !== '') {
           this.$emit('errorMessage', e.message)
         }
 
-        return JSON.stringify({})
+        return ''
       }
     },
   },

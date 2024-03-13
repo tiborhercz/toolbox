@@ -16,14 +16,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "Cidr" */ '../views/Cidr'),
   },
   {
-    path: '/jwt',
-    name: 'Jwt',
-    component: () => import(/* webpackChunkName: "Jwt" */ '../views/Jwt'),
-  },
-  {
     path: '/json',
     name: 'json',
-    component: () => import(/* webpackChunkName: "Json" */ '../views/Json'),
+    component: {
+      render: (c) => c('router-view'),
+    },
+    children: [
+      {
+        path: 'jwt',
+        component: () => import(/* webpackChunkName: "Json" */ '../views/json/Jwt'),
+      },
+      {
+        path: 'json-beautify',
+        component: () => import(/* webpackChunkName: "Json" */ '../views/json/JsonBeautify'),
+      },
+      {
+        path: 'json-to-yaml',
+        component: () => import(/* webpackChunkName: "Json" */ '../views/json/JsonToYaml'),
+      },
+    ],
   },
   {
     path: '/hash',

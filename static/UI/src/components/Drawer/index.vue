@@ -71,12 +71,17 @@ export default {
         {
           title: 'JWT Decode',
           icon: 'mdi-code-braces',
-          to: '/jwt',
+          to: '/json/jwt',
         },
         {
           title: 'JSON Beautify',
           icon: 'mdi-code-braces',
-          to: '/json',
+          to: '/json/json-beautify',
+        },
+        {
+          title: 'JSON to YAML',
+          icon: 'mdi-code-braces',
+          to: '/json/json-to-yaml',
         },
         {
           title: 'Hash',

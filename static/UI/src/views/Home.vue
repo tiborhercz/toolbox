@@ -6,20 +6,35 @@
         offset="3"
       >
         <div>
-          <p align="center"><img src="@/assets/toolbox.png" height="60" alt="Project Logo"></p>
-          <h3 align="center">Toolbox</h3>
-          <p align="center">A collection of various tools for developers, engineers and
-            programmers</p>
+          <p align="center">
+            <img
+              src="@/assets/toolbox.png"
+              height="60"
+              alt="Project Logo"
+            >
+          </p>
+          <h3 align="center">
+            Toolbox
+          </h3>
+          <p align="center">
+            A collection of various tools for developers, engineers and
+            programmers
+          </p>
           <p align="center">
             <a href="https://github.com/tiborhercz/toolbox/releases"><img
               src="https://img.shields.io/github/downloads/tiborhercz/toolbox/total.svg"
-              alt="GitHub Downloads"></a>
+              alt="GitHub Downloads"
+            ></a>
             <a href="https://github.com/tiborhercz/toolbox/releases/latest"><img
               src="https://img.shields.io/github/release/tiborhercz/toolbox.svg"
-              alt="Latest Release"></a>
+              alt="Latest Release"
+            >
+            </a>
             <a href="https://github.com/tiborhercz/toolbox/actions/workflows/go-ci.yaml"><img
               src="https://img.shields.io/github/workflow/status/tiborhercz/toolbox/Build"
-              alt="Build Status"></a>
+              alt="Build Status"
+            >
+            </a>
           </p>
         </div>
       </v-col>

@@ -19,31 +19,45 @@ export default {
   name: 'JsonFormatter',
   components: {},
   props: {
-    json: {
+    indent: {
+      default: 2,
+      type: Number,
+    },
+    value: {
       default: '',
       type: String,
     },
   },
   computed: {
     content() {
-      let jsonValue = this.json
+      let jsonValue = this.value
 
       this.$nextTick(() => {
         Prism.highlightAllUnder(this.$refs.prism)
       })
 
       try {
-        jsonValue = JSON.stringify(JSON.parse(jsonValue), null, 4)
+        jsonValue = JSON.stringify(JSON.parse(jsonValue), null, this.getIndentValue())
 
-        this.$emit('formattedJson', jsonValue)
+        this.$emit('formattedValue', jsonValue)
         return jsonValue
       } catch (e) {
-        if (this.json !== '') {
+        if (this.value !== '') {
           this.$emit('errorMessage', e.message)
         }
 
         return JSON.stringify({})
       }
+    },
+  },
+  methods: {
+    getIndentValue() {
+      const indentValue = this.indent
+      if (!indentValue) {
+        return 2
+      }
+
+      return this.indent
     },
   },
 }

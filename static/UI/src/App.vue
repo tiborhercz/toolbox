@@ -1,13 +1,43 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { RouterView } from 'vue-router'
+import { useTheme } from 'vuetify'
+import Drawer from '@/components/DrawerComponent'
+
+const theme = useTheme()
+
+const darkMode = ref(true)
+
+function toggleDarkMode() {
+  darkMode.value = !theme.global.current.value.dark
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  localStorage.setItem('dark_theme', theme.global.current.value.dark ? 'true' : 'false')
+}
+
+onMounted(() => {
+  const LocalDarkTheme = localStorage.getItem('dark_theme')
+  if (LocalDarkTheme) {
+    theme.global.name.value = LocalDarkTheme === 'true' ? 'dark' : 'light'
+    darkMode.value = LocalDarkTheme === 'true'
+  }
+})
+</script>
+
+<style lang="scss">
+@import "@/assets/scss/main.scss";
+</style>
+
 <template>
-  <v-app v-bind:style="{background: $vuetify.theme.themes[darkTheme].background}">
+  <v-app>
     <v-navigation-drawer
-      v-bind:color="$vuetify.theme.themes[darkTheme].drawer"
       app
     >
       <v-container>
         <v-row>
           <v-col>
-            <h1>Toolbox</h1>
+            <router-link class="nostyle" to="/">
+              <h1>Toolbox</h1>
+            </router-link>
           </v-col>
         </v-row>
       </v-container>
@@ -29,38 +59,3 @@
     </v-main>
   </v-app>
 </template>
-
-<script>
-import Drawer from '@/components/Drawer'
-
-export default {
-  name: 'App',
-  components: { Drawer },
-  data: () => ({
-    darkMode: true,
-  }),
-  computed: {
-    darkTheme() {
-      return this.darkMode ? 'dark' : 'light'
-    },
-  },
-  mounted() {
-    const theme = localStorage.getItem('dark_theme')
-    if (theme) {
-      this.$vuetify.theme.dark = theme === 'true'
-      this.darkMode = theme === 'true'
-    }
-  },
-  methods: {
-    toggleDarkMode() {
-      if (this.darkMode) {
-        window.document.body.style.backgroundColor = '#222222'
-      } else {
-        window.document.body.style.backgroundColor = '#ffffff'
-      }
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-      localStorage.setItem('dark_theme', this.$vuetify.theme.dark.toString())
-    },
-  },
-}
-</script>

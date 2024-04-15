@@ -7,3 +7,20 @@ body {
 .theme--dark.v-application code {
   background: transparent!important;
 }
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+a.nostyle:link {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+}
+
+a.nostyle:visited {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+}

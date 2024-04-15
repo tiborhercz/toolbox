@@ -31,6 +31,10 @@ func init() {
 func exitOnPortInUse(protocol string, port string) {
 	ln, err := net.Listen(protocol, "0.0.0.0:"+port)
 
+	if strings.contains(err, "address already in use") {
+	    ln, err := net.Listen(protocol, "0.0.0.0:"+"8001")
+	}
+
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Can't listen on port %q: %s\n", port, err)
 		os.Exit(1)

@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib/framework'
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/styles'
 
-Vue.use(Vuetify)
+import { createVuetify } from 'vuetify'
 
-export default new Vuetify({
+export default createVuetify({
   theme: {
     options: {
       customProperties: true,
     },
+    defaultTheme: 'dark',
     themes: {
       light: {
+        dark: false,
         primary: '#1976D2',
         secondary: '#424242',
         accent: '#82B1FF',
@@ -21,15 +23,22 @@ export default new Vuetify({
         drawer: '#FFFFFF',
       },
       dark: {
-        primary: '#939aa6',
-        secondary: '#424242',
-        accent: '#82B1FF',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107',
-        background: '#223042',
-        drawer: '#223042',
+        dark: true,
+        colors: {
+          background: '#223042',
+          surface: '#18222E',
+          'surface-bright': '#FFFFFF',
+          'surface-light': '#EEEEEE',
+          'surface-variant': '#424242',
+          'on-surface-variant': '#EEEEEE',
+          primary: '#939aa6',
+          secondary: '#424242',
+          accent: '#82B1FF',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FFC107',
+        },
       },
     },
     dark: true,

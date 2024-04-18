@@ -34,7 +34,7 @@ jobs:
 
       - name: Building the project
         working-directory: ./static/UI
-        run: npm run build
+        run: vite build
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2

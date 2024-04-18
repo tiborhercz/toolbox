@@ -15,6 +15,10 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
 
+      - name: Installing Vite
+        working-directory: ./static/UI
+        run: npm i vite
+
       - name: Installing node project dependencies
         working-directory: ./static/UI
         run: npm install

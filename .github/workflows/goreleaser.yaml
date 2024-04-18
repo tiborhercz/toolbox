@@ -17,7 +17,7 @@ jobs:
 
       - name: Installing Vite
         working-directory: ./static/UI
-        run: npm i vite
+        run: npm install -g vite
 
       - name: Installing node project dependencies
         working-directory: ./static/UI
@@ -25,7 +25,7 @@ jobs:
 
       - name: Building the project
         working-directory: ./static/UI
-        run: vite build
+        run: npm run build
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2

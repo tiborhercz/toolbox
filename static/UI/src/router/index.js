@@ -1,62 +1,65 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/cidr',
-    name: 'Cidr',
-    component: () => import(/* webpackChunkName: "Cidr" */ '../views/Cidr'),
-  },
-  {
-    path: '/jwt',
-    name: 'Jwt',
-    component: () => import(/* webpackChunkName: "Jwt" */ '../views/Jwt'),
-  },
-  {
-    path: '/json',
-    name: 'json',
-    component: () => import(/* webpackChunkName: "Json" */ '../views/Json'),
-  },
-  {
-    path: '/hash',
-    name: 'hash',
-    component: () => import(/* webpackChunkName: "Hash" */ '../views/Hash'),
-  },
-  {
-    path: '/base64',
-    name: 'Base64',
-    component: {
-      render: (c) => c('router-view'),
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: HomeView,
     },
-    children: [
-      {
-        path: 'encode',
-        component: () => import(/* webpackChunkName: "Base64" */ '../views/Base64'),
-        props: {
-          type: 'encode',
+    {
+      path: '/cidr',
+      name: 'Cidr',
+      component: () => import('../views/CidrView'),
+    },
+    {
+      path: '/json',
+      name: 'json',
+      component: RouterView,
+      children: [
+        {
+          path: 'jwt',
+          component: () => import('../views/JwtDecodeView'),
         },
-      },
-      {
-        path: 'decode',
-        component: () => import(/* webpackChunkName: "Base64" */ '../views/Base64'),
-        props: {
-          type: 'decode',
+        {
+          path: 'json-beautify',
+          component: () => import('../views/JsonBeautifyView'),
         },
-      },
-    ],
-  },
-]
-
-const router = new VueRouter({
-  routes,
+        {
+          path: 'json-to-yaml',
+          component: () => import('../views/JsonToYamlView'),
+        },
+      ],
+    },
+    {
+      path: '/hash',
+      name: 'hash',
+      component: () => import('../views/HashView'),
+    },
+    {
+      path: '/base64',
+      name: 'Base64',
+      component: RouterView,
+      children: [
+        {
+          path: 'encode',
+          component: () => import(/* webpackChunkName: "Base64" */ '../views/Base64View'),
+          props: {
+            type: 'encode',
+          },
+        },
+        {
+          path: 'decode',
+          component: () => import(/* webpackChunkName: "Base64" */ '../views/Base64View'),
+          props: {
+            type: 'decode',
+          },
+        },
+      ],
+    },
+  ],
 })
 
 export default router

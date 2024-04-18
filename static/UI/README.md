@@ -1,21 +1,35 @@
-### Wasm "syscall/js.finalizeRef" not implemented
+# vue-project
 
-In tinygo "syscall/js.finalizeRef" is not implemented. To fix the console errors manually implement "syscall/js.finalizeRef"
+This template should help get you started developing with Vue 3 in Vite.
 
-See https://github.com/tinygo-org/tinygo/issues/1140
+## Recommended IDE Setup
 
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
 ```
-					// func finalizeRef(v ref)
-					"syscall/js.finalizeRef": (v_addr) => {
-						// Note: TinyGo does not support finalizers so this is only called
-						// for one specific case, by js.go:jsString.
-						const id = mem().getUint32(v_addr, true);
-						this._goRefCounts[id]--;
-						if (this._goRefCounts[id] === 0) {
-							const v = this._values[id];
-							this._values[id] = null;
-							this._ids.delete(v);
-							this._idPool.push(id);
-						}
-					},
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
 ```

@@ -8,7 +8,7 @@
       </p>
       <v-row>
         <v-col
-          cols="12"
+          cols="10"
           md="7"
         >
           <v-textarea
@@ -17,7 +17,17 @@
             label="JSON"
             v-bind:error="error"
             v-bind:error-messages="errorMessages"
-            outlined
+            variant="outlined"
+          />
+        </v-col>
+        <v-col
+          cols="2"
+          md="2"
+        >
+          <v-text-field
+            v-model.number="indent"
+            label="Indent"
+            variant="outlined"
           />
         </v-col>
         <v-col
@@ -26,8 +36,9 @@
         >
           <h2>Formatted JSON</h2>
           <json-formatter
-            v-bind:json="inputValue"
-            v-on:formattedJson="setFormattedJson"
+            v-bind:value="inputValue"
+            v-bind:indent="indent"
+            v-on:formattedValue="setFormattedJson"
             v-on:errorMessage="setErrorMessage"
           />
           <basic-button
@@ -45,7 +56,7 @@ import BasicButton from '@/components/Basic/Button'
 import jsonFormatter from '@/components/CodeFormatters/JsonFormatter'
 
 export default {
-  name: 'Json',
+  name: 'JsonBeautify',
   components: {
     jsonFormatter,
     BasicButton,
@@ -54,7 +65,8 @@ export default {
   data() {
     return {
       value: '',
-      formattedJson: {},
+      indent: 2,
+      formattedJson: '{}',
       error: false,
       errorMessages: [],
     }

@@ -1,38 +1,39 @@
 {
-  "name": "toolbox-ui",
-  "version": "0.1.0",
+  "name": "vue-project",
+  "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@mdi/font": "7.0.96",
+    "@rushstack/eslint-patch": "^1.8.0",
+    "@vue/eslint-config-airbnb": "^8.0.0",
     "axios": "^0.26.0",
-    "core-js": "^3.6.5",
+    "js-yaml": "^4.1.0",
     "json-beautify": "^1.1.1",
+    "json-to-pretty-yaml": "^1.2.2",
     "prismjs": "^1.25.0",
-    "vue": "^2.6.14",
-    "vue-router": "^3.5.0",
-    "vuetify": "^2.4.0",
-    "vuex": "^3.6.0"
+    "roboto-fontface": "*",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.0.0",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-airbnb": "^5.3.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^6.0.0",
-    "sass": "~1.32.0",
-    "sass-loader": "^10.2.0",
-    "vue-cli-plugin-vuetify": "~2.4.5",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
+    "@vitejs/plugin-vue": "^5.0.4",
+    "eslint": "^8.49.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-vue": "^9.17.0",
+    "sass": "^1.75.0",
+    "sass-loader": "^14.1.1",
+    "unplugin-fonts": "^1.1.1",
+    "unplugin-vue-components": "^0.26.0",
+    "vite": "^5.1.5",
+    "vite-plugin-vuetify": "^2.0.3"
   }
 }

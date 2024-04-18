@@ -2,20 +2,22 @@
   <v-container>
     <v-row>
       <v-col>
-        <h1>JWT Decode</h1>
+        <h1>Hash {{ type }}</h1>
       </v-col>
     </v-row>
-    <jwt />
+    <Hash
+      v-bind:type="type"
+    />
   </v-container>
 </template>
 
 <script>
-import Jwt from '@/components/tools/Jwt'
+import Hash from '@/components/tools/HashComponent'
 
 export default {
-  name: 'Base64View',
+  name: 'HashView',
   components: {
-    Jwt,
+    Hash,
   },
   props: {
     type: {

@@ -13,7 +13,7 @@
             v-model="value"
             name="input-7-1"
             label="Input"
-            outlined
+            variant="outlined"
           />
         </v-col>
         <v-col>
@@ -21,7 +21,7 @@
             v-model="selectedHashAlgorithm"
             v-bind:items="hashAlgorithmsReversed"
             label="Select an algorithm"
-            outlined
+            variant="outlined"
           />
         </v-col>
         <v-col
@@ -33,7 +33,7 @@
             name="input-7-1"
             v-bind:label="selectedHashAlgorithm + ' Output'"
             readonly
-            outlined
+            variant="outlined"
           />
           <v-btn
             v-on:click="copyText(outputValue)"

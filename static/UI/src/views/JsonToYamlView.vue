@@ -2,21 +2,20 @@
   <v-container>
     <v-row>
       <v-col>
-        <h1>CIDR calculator</h1>
+        <h1>Convert JSON to YAML</h1>
       </v-col>
     </v-row>
-    <Cidr />
+    <json-to-yaml />
   </v-container>
 </template>
 
 <script>
-import Cidr from '@/components/tools/Cidr'
+import JsonToYaml from '@/components/tools/JsonToYamlComponent'
 
 export default {
-  name: 'CidrView',
+  name: 'JsonToYamlView',
   components: {
-    Cidr,
+    JsonToYaml,
   },
-  mounted() {},
 }
 </script>

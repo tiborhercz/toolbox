@@ -15,7 +15,7 @@
             label="JWT token"
             v-bind:error="error"
             v-bind:error-messages="errorMessages"
-            outlined
+            variant="outlined"
           />
         </v-col>
         <v-col>
@@ -32,7 +32,7 @@
           md="7"
         >
           <h2>JWT Header</h2>
-          <json-formatter v-bind:json="headerValue" />
+          <json-formatter v-bind:value="headerValue" />
           <basic-button
             v-bind:label="'copy'"
             v-bind:copy-value="headerValue"
@@ -43,7 +43,7 @@
           md="7"
         >
           <h2>JWT Payload</h2>
-          <json-formatter v-bind:json="payloadValue" />
+          <json-formatter v-bind:value="payloadValue" />
           <basic-button
             v-bind:label="'copy'"
             v-bind:copy-value="payloadValue"
@@ -59,7 +59,7 @@ import BasicButton from '@/components/Basic/Button'
 import JsonFormatter from '@/components/CodeFormatters/JsonFormatter'
 
 export default {
-  name: 'Jwt',
+  name: 'JwtDecodeComponent',
   components: {
     BasicButton,
     JsonFormatter,

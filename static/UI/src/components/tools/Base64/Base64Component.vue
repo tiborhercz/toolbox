@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import Encode from './encode'
-import Decode from './decode'
+import Encode from '@/components/tools/Base64/Encode'
+import Decode from '@/components/tools/Base64/Decode'
 
 export default {
-  name: 'Base64',
+  name: 'Base64EncodeDecode',
   components: {
     Encode,
     Decode,
@@ -69,3 +69,4 @@ export default {
   },
 }
 </script>
+>

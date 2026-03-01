@@ -3,10 +3,11 @@ package cmd
 import (
 	"bytes"
 	"encoding/json"
+	"log"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/tiborhercz/toolbox/pkg/jwtdecode"
-	"log"
 )
 
 var (
@@ -18,15 +19,16 @@ var (
 				logrus.Fatal("requires an argument. Example argument: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
 			}
 
-			jwtData, err := jwtdecode.Process(args[0])
+			header, payload, err := jwtdecode.DecodeRaw(args[0])
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			for _, value := range jwtData {
-				prettyJson, _ := prettifyJson(value)
-				logrus.Infof("\n%v", prettyJson)
-			}
+			prettyJsonHeader, _ := prettifyJson(header)
+			logrus.Infof("Header: \n%v", prettyJsonHeader)
+
+			prettyJsonPayload, _ := prettifyJson(payload)
+			logrus.Infof("Payload: \n%v", prettyJsonPayload)
 		},
 	}
 )

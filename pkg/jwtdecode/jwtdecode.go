@@ -7,46 +7,56 @@ import (
 	"strings"
 )
 
-func Process(value string) ([][]byte, error) {
-	split := strings.Split(value, ".")
+var ErrInvalidJWTFormat = errors.New("invalid JWT format")
 
-	if len(split) != 3 {
-		return nil, errors.New("JWT token should split up by three dots")
+func DecodeRaw(token string) ([]byte, []byte, error) {
+	parts := strings.Split(token, ".")
+	if len(parts) != 3 {
+		return nil, nil, ErrInvalidJWTFormat
 	}
 
-	var (
-		errorValue  error
-		returnValue [][]byte
-	)
-
-	for _, value := range split[0:2] {
-		decodedString, err := decodeB64(value)
-		if err != nil {
-			errorValue = err
-			break
-		}
-
-		if !json.Valid(decodedString) {
-			errorValue = errors.New("invalid JSON")
-			break
-		}
-
-		returnValue = append(returnValue, decodedString)
+	header, err := b64.RawURLEncoding.DecodeString(parts[0])
+	if err != nil {
+		return nil, nil, err
 	}
 
-	if errorValue != nil {
-		return nil, errorValue
+	payload, err := b64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		return nil, nil, err
 	}
 
-	return returnValue, nil
+	return header, payload, nil
 }
 
-func decodeB64(value string) ([]byte, error) {
-	decodedString, err := b64.RawStdEncoding.DecodeString(value)
-
-	if err != nil {
-		return nil, err
+func Decode(token string) (map[string]any, map[string]any, error) {
+	parts := strings.Split(token, ".")
+	if len(parts) != 3 {
+		return nil, nil, ErrInvalidJWTFormat
 	}
 
-	return decodedString, nil
+	decode := func(part string) (map[string]any, error) {
+		raw, err := b64.RawURLEncoding.DecodeString(part)
+		if err != nil {
+			return nil, err
+		}
+
+		var data map[string]any
+		if err := json.Unmarshal(raw, &data); err != nil {
+			return nil, err
+		}
+
+		return data, nil
+	}
+
+	header, err := decode(parts[0])
+	if err != nil {
+		return nil, nil, err
+	}
+
+	payload, err := decode(parts[1])
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return header, payload, nil
 }

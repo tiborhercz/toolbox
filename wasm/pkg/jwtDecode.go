@@ -14,17 +14,17 @@ type JwtResponse struct {
 }
 
 func ProcessJwtDecode(this js.Value, args []js.Value) interface{} {
-	jwtData, err := jwtdecode.Process(args[0].String())
+	header, payload, err := jwtdecode.DecodeRaw(args[0].String())
 	if err != nil {
 		return ""
 	}
 
-	jwtHeader, err := prettifyJson(jwtData[0])
+	jwtHeader, err := prettifyJson(header)
 	if err != nil {
 		return ""
 	}
 
-	jwtPayload, err := prettifyJson(jwtData[1])
+	jwtPayload, err := prettifyJson(payload)
 	if err != nil {
 		return ""
 	}

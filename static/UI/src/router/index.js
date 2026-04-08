@@ -34,6 +34,11 @@ const router = createRouter({
       ],
     },
     {
+      path: '/dns',
+      name: 'dns',
+      component: () => import('../views/DnsView'),
+    },
+    {
       path: '/hash',
       name: 'hash',
       component: () => import('../views/HashView'),

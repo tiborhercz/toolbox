@@ -19,6 +19,11 @@ export default {
           to: '/cidr',
         },
         {
+          title: 'DNS Lookup',
+          icon: 'mdi-dns',
+          to: '/dns',
+        },
+        {
           title: 'JWT Decode',
           icon: 'mdi-code-braces',
           to: '/json/jwt',

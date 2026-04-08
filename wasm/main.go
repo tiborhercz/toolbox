@@ -13,5 +13,7 @@ func main() {
 	global.Set("wasmIpv4Process", js.FuncOf(pkg.ProcessIpv4))
 	global.Set("wasmHashGetSupportedHashingAlgorithms", js.FuncOf(pkg.GetSupportedHashingAlgorithms))
 	global.Set("wasmHash", js.FuncOf(pkg.Hash))
+	global.Set("wasmDnsLookup", js.FuncOf(pkg.DnsLookup))
+	global.Set("wasmDnsPropagation", js.FuncOf(pkg.DnsPropagation))
 	<-done
 }

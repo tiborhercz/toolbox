@@ -25,3 +25,7 @@ type CidrOptions struct {
 type HashOptions struct {
 	Algorithm string
 }
+
+type DnsOptions struct {
+	RecordType string
+}

@@ -22,15 +22,6 @@ const wasmContentTypePlugin = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-              @use "@/assets/scss/main.scss";
-            `,
-      },
-    },
-  },
   plugins: [
     wasmContentTypePlugin,
     Vue({

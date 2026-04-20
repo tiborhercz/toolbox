@@ -1,3 +1,5 @@
+version: 2
+
 project_name: "toolbox"
 
 before:
@@ -10,14 +12,14 @@ builds:
   - main: ./main.go
     binary: toolbox
     goos: [ "linux", "darwin", "windows" ]
-    goarch: [ "386", "amd64" ]
+    goarch: [ "386", "amd64", "arm64" ]
     ldflags:
       - -s -w -X "github.com/tiborhercz/toolbox/cmd.version={{.Version}}"
     env:
       - CGO_ENABLED=0
 
 brews:
-  - tap:
+  - repository:
       owner: tiborhercz
       name: homebrew-toolbox
     name: toolbox
@@ -28,7 +30,7 @@ brews:
     commit_author:
       name: Tibor Hercz
       email: git@hercz.nl
-    folder: Formula
+    directory: Formula
     install: |-
       bin.install "toolbox"
     test: |

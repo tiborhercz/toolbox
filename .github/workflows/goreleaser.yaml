@@ -45,7 +45,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: "1.26.x"
+          go-version: "1.26.2"
       - name: Build wasm
         run: GOOS=js GOARCH=wasm go build -o main.wasm wasm/*.go
       - uses: actions/upload-artifact@v7
@@ -65,7 +65,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v6
         with:
-          go-version: "1.26.x"
+          go-version: "1.26.2"
 
       - uses: actions/download-artifact@v7
         with:

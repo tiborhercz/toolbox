@@ -6,12 +6,12 @@ jobs:
   go-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.23"
+          go-version: "1.26"
 
       - name: Test internal
         run: go test -v ./internal/...
@@ -23,12 +23,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '20' ]
+        node: [ '24' ]
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Installing Vite
         working-directory: ./static/UI
@@ -43,7 +43,7 @@ jobs:
         run: npm run build
 
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vue-frontend
           path: |
@@ -53,15 +53,15 @@ jobs:
   build-wasm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.23"
+          go-version: "1.26"
       - name: Build wasm
         run: GOOS=js GOARCH=wasm go build -o main.wasm wasm/*.go
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v7
         with:
           name: go-wasm
           path: main.wasm
@@ -70,19 +70,19 @@ jobs:
     needs: ['build-vue', 'build-wasm']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
-          go-version: "1.23.x"
+          go-version: "1.26.x"
 
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v7
         with:
           name: vue-frontend
           path: static/UI/dist
 
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v7
         with:
           name: go-wasm
           path: static/UI/dist

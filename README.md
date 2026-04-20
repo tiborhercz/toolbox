@@ -4,7 +4,8 @@
 <p align="center">
     <a href="https://github.com/tiborhercz/toolbox/releases"><img src="https://img.shields.io/github/downloads/tiborhercz/toolbox/total.svg" alt="GitHub Downloads"></a>
     <a href="https://github.com/tiborhercz/toolbox/releases/latest"><img src="https://img.shields.io/github/release/tiborhercz/toolbox.svg" alt="Latest Release"></a>
-    <a href="https://github.com/tiborhercz/toolbox/actions/workflows/go-ci.yaml"><img src="https://img.shields.io/github/workflow/status/tiborhercz/toolbox/Build" alt="Build Status"></a>
+    <a href="https://github.com/tiborhercz/toolbox/actions/workflows/go.yaml"><img src="https://img.shields.io/github/actions/workflow/status/tiborhercz/toolbox/go.yaml" alt="Build Status"></a>
+    <a href="https://github.com/tiborhercz/toolbox/blob/main/LICENSE"><img src="https://img.shields.io/github/license/tiborhercz/toolbox" alt="License"></a>
 </p>
 
 # About
@@ -42,7 +43,7 @@ Steps to compile:
 ```shell
 GOOS=js GOARCH=wasm go build -o static/UI/public/main.wasm wasm/*.go
 ```
-2. Build the Vue.js frontend. Run `npm run build` inside the `static/UI/public/` directory
+2. Build the Vue.js frontend. Run `npm run build` inside the `static/UI/` directory
 3. Run `go build .` in the root directory
 4. Run toolbox with `./toolbox`
 
@@ -58,6 +59,7 @@ Available Commands:
   base64      Encode and decode base64 strings
   cidr        Calculate IPv4 CIDR ranges
   completion  generate the autocompletion script for the specified shell
+  dns         DNS lookup tools
   hash        Hash
   help        Help about any command
   jwtdecode   Decode jwt token

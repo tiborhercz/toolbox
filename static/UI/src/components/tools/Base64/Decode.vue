@@ -19,9 +19,6 @@ export default {
   data() {
     return {
       value: '',
-      apiResponseValue: '',
-      error: false,
-      errorMessages: [],
     }
   },
   computed: {
@@ -31,9 +28,6 @@ export default {
       },
       set(newValue) {
         this.value = newValue
-
-        this.error = false
-        this.errorMessages = []
 
         try {
           if (newValue !== '') {

@@ -7,8 +7,14 @@
 </template>
 
 <script>
+import { useSnackbar } from '@/helpers/useSnackbar'
+
 export default {
   name: 'ButtonComponent',
+  setup() {
+    const { showSnackbar } = useSnackbar()
+    return { showSnackbar }
+  },
   props: {
     label: {
       default: '',
@@ -23,6 +29,7 @@ export default {
     copyText() {
       if (this.copyValue) {
         navigator.clipboard.writeText(this.copyValue)
+        this.showSnackbar('Copied!')
       }
     },
   },

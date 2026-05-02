@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useTheme } from 'vuetify'
 import Drawer from '@/components/DrawerComponent'
+import { useSnackbar } from '@/helpers/useSnackbar'
+
+const { snackbarState } = useSnackbar()
 
 const theme = useTheme()
 
@@ -57,5 +60,8 @@ onMounted(() => {
         <router-view />
       </v-container>
     </v-main>
+    <v-snackbar v-model="snackbarState.show" :timeout="1500" color="success" location="bottom right">
+      {{ snackbarState.message }}
+    </v-snackbar>
   </v-app>
 </template>

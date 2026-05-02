@@ -26,6 +26,18 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row v-if="expiration">
+        <v-col cols="12" md="7">
+          <v-alert
+            v-bind:type="expiration.isExpired ? 'error' : 'success'"
+            variant="tonal"
+            density="compact"
+          >
+            <span v-if="expiration.isExpired">Expired {{ expiration.relative }} &mdash; {{ expiration.formatted }}</span>
+            <span v-else>Expires {{ expiration.relative }} &mdash; {{ expiration.formatted }}</span>
+          </v-alert>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col
           cols="12"
@@ -55,8 +67,21 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import BasicButton from '@/components/Basic/Button'
 import JsonFormatter from '@/components/CodeFormatters/JsonFormatter'
+
+dayjs.extend(relativeTime)
+
+function formatExpiration(exp) {
+  const expDate = dayjs.unix(exp)
+  return {
+    isExpired: expDate.isBefore(dayjs()),
+    relative: expDate.fromNow(),
+    formatted: expDate.toDate().toUTCString(),
+  }
+}
 
 export default {
   name: 'JwtDecodeComponent',
@@ -75,7 +100,7 @@ export default {
       value: '',
       headerValue: '',
       payloadValue: '',
-      exampleJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+      exampleJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE4OTM0NTYwMDB9.r9GHDRgoOl3eJRpFUkEPseFqVHxRkBFbSInIhGxOfFw',
       error: false,
       errorMessages: [],
     }
@@ -106,6 +131,16 @@ export default {
           this.errorMessages.push('Invalid JWT token.')
         }
       },
+    },
+    expiration() {
+      if (!this.payloadValue) return null
+      try {
+        const payload = JSON.parse(this.payloadValue)
+        if (typeof payload.exp !== 'number') return null
+        return formatExpiration(payload.exp)
+      } catch {
+        return null
+      }
     },
   },
   methods: {

@@ -14,8 +14,7 @@ registerPlugins(app)
 
 app.use(router)
 
-app.mount('#app')
-
 WebAssembly.instantiateStreaming(fetch('/main.wasm'), go.importObject).then((result) => {
   go.run(result.instance)
+  app.mount('#app')
 })

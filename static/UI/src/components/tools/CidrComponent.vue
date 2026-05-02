@@ -183,10 +183,8 @@ const generateItems = () => {
 }
 
 const getCidr = () => {
-  console.log(value.value)
   if (validateIpv4Cidr(value.value)) {
     let data = wasmIpv4Process(value.value) // eslint-disable-line
-    console.log(data)
     data = JSON.parse(data)
 
     ipv4Data.value.subnetMask.value = data.subnetMask

@@ -13,6 +13,7 @@
     "@mdi/font": "7.0.96",
     "@rushstack/eslint-patch": "^1.8.0",
     "@vue/eslint-config-airbnb": "^8.0.0",
+    "dayjs": "^1.11.20",
     "js-yaml": "^4.1.0",
     "json-beautify": "^1.1.1",
     "json-to-pretty-yaml": "^1.2.2",

@@ -47,9 +47,14 @@
 </template>
 
 <script>
+import { useSnackbar } from '@/helpers/useSnackbar'
+
 export default {
   name: 'Hash',
-  components: {},
+  setup() {
+    const { showSnackbar } = useSnackbar()
+    return { showSnackbar }
+  },
   props: {
     type: {
       default: '',
@@ -94,11 +99,12 @@ export default {
         this.outputValue = data
       } catch (error) {
         this.error = true
-        this.errorMessages.push('Invalid JWT token.')
+        this.errorMessages.push('Could not hash input.')
       }
     },
     copyText(value) {
       navigator.clipboard.writeText(value)
+      this.showSnackbar('Copied!')
     },
   },
 }

@@ -43,6 +43,16 @@ export default {
           icon: 'mdi-pound',
           to: '/hash',
         },
+        {
+          title: 'chmod Calculator',
+          icon: 'mdi-lock',
+          to: '/chmod',
+        },
+        {
+          title: 'Case Converter',
+          icon: 'mdi-format-letter-case',
+          to: '/case-converter',
+        },
       ],
     }
   },

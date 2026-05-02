@@ -44,6 +44,16 @@ const router = createRouter({
       component: () => import('../views/HashView'),
     },
     {
+      path: '/chmod',
+      name: 'chmod',
+      component: () => import('../views/ChmodView'),
+    },
+    {
+      path: '/case-converter',
+      name: 'case-converter',
+      component: () => import('../views/CaseConverterView'),
+    },
+    {
       path: '/base64',
       name: 'Base64',
       component: RouterView,

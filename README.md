@@ -50,26 +50,35 @@ GOOS=js GOARCH=wasm go build -o static/UI/public/main.wasm wasm/*.go
 ### Makefile
 To build the toolbox run: `make build`
 
-## Usage
+## Tools
 
-```
-toolbox [command]
+### Browser
 
-Available Commands:
-  base64      Encode and decode base64 strings
-  cidr        Calculate IPv4 CIDR ranges
-  completion  generate the autocompletion script for the specified shell
-  dns         DNS lookup tools
-  hash        Hash
-  help        Help about any command
-  jwtdecode   Decode jwt token
-  webui       Launch the web UI for the Toolbox
-```
+| Tool | Path |
+|---|---|
+| Base64 Encode | `/base64/encode` |
+| Base64 Decode | `/base64/decode` |
+| Case Converter | `/case-converter` |
+| chmod Calculator | `/chmod` |
+| CIDR Calculator | `/cidr` |
+| DNS Lookup | `/dns` |
+| Hash | `/hash` |
+| JSON Beautify | `/json/json-beautify` |
+| JSON to YAML | `/json/json-to-yaml` |
+| JWT Decode | `/json/jwt` |
 
-### Launching the web UI
-```shell
-toolbox webui
-```
+### CLI
+
+| Command | Description |
+|---|---|
+| `toolbox base64 encode <value>` | Encode a string to base64 |
+| `toolbox base64 decode <value>` | Decode a base64 string |
+| `toolbox cidr ip <cidr>` | Calculate IPv4 CIDR ranges from IP address |
+| `toolbox cidr subnetmask <mask>` | Calculate IPv4 CIDR ranges from subnet mask |
+| `toolbox dns lookup <domain>` | Look up DNS records for a domain |
+| `toolbox hash <value>` | Hash a string |
+| `toolbox jwtdecode <token>` | Decode a JWT token |
+| `toolbox webui` | Launch the web UI |
 
 ## License
 

@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -100,9 +101,71 @@ var (
 			}
 		},
 	}
+	dnsProfileCmd = &cobra.Command{
+		Use:   "profile [domain]",
+		Short: "Profile query latency across public DNS resolvers and the system resolver",
+		Run: func(cmd *cobra.Command, args []string) {
+			if len(args) < 1 {
+				logrus.Fatal("requires a domain argument. Example: toolbox dns profile example.com")
+			}
+
+			domain := args[0]
+			recordType := strings.ToUpper(dnsOptions.RecordType)
+			if recordType == "" {
+				recordType = "A"
+			}
+
+			ctx := context.Background()
+			providers := dns.DefaultProfileProviders()
+			results := dns.Profile(ctx, domain, recordType, providers)
+
+			fmt.Println(formatProfileResults(results, recordType, domain))
+		},
+	}
 )
 
 var supportedRecordTypes = []string{"A", "AAAA", "MX", "NS", "TXT", "CNAME", "SOA", "CAA", "DMARC"}
+
+func formatProfileResults(results []dns.ProfileResult, recordType, domain string) string {
+	sorted := make([]dns.ProfileResult, len(results))
+	copy(sorted, results)
+	sort.SliceStable(sorted, func(i, j int) bool {
+		// Errored providers sink to the bottom.
+		ei, ej := sorted[i].Error != "", sorted[j].Error != ""
+		if ei != ej {
+			return !ei
+		}
+		return sorted[i].Latency < sorted[j].Latency
+	})
+
+	var b strings.Builder
+	fmt.Fprintf(&b, "DNS profile for %s (%s)\n", domain, recordType)
+	fmt.Fprintf(&b, "%-32s %10s   %s\n", "Provider", "Latency", "Result")
+	fmt.Fprintln(&b, strings.Repeat("-", 78))
+
+	for _, r := range sorted {
+		latency := r.Latency.Round(100_000).String() // microsecond precision
+		if r.Error != "" {
+			fmt.Fprintf(&b, "%-32s %10s   error: %s\n", r.Provider, latency, r.Error)
+			continue
+		}
+		summary := summarizeRecords(r.Records)
+		fmt.Fprintf(&b, "%-32s %10s   %s\n", r.Provider, latency, summary)
+	}
+
+	return strings.TrimRight(b.String(), "\n")
+}
+
+func summarizeRecords(records []dns.Record) string {
+	if len(records) == 0 {
+		return "no records"
+	}
+	parts := make([]string, 0, len(records))
+	for _, r := range records {
+		parts = append(parts, r.Data)
+	}
+	return strings.Join(parts, ", ")
+}
 
 func formatRecords(records []dns.Record) string {
 	grouped := make(map[string][]dns.Record)
@@ -131,9 +194,10 @@ func formatRecords(records []dns.Record) string {
 
 func init() {
 	rootCmd.AddCommand(dnsCmd)
-	dnsCmd.AddCommand(dnsLookupCmd, dnsPropagationCmd)
+	dnsCmd.AddCommand(dnsLookupCmd, dnsPropagationCmd, dnsProfileCmd)
 
 	typeFlag := "DNS record type to query. Supported types: " + strings.Join(supportedRecordTypes, ", ")
 	dnsLookupCmd.Flags().StringVarP(&dnsOptions.RecordType, "type", "t", "", typeFlag)
 	dnsPropagationCmd.Flags().StringVarP(&dnsOptions.RecordType, "type", "t", "", typeFlag)
+	dnsProfileCmd.Flags().StringVarP(&dnsOptions.RecordType, "type", "t", "A", "DNS record type to profile (default A)")
 }

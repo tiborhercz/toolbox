@@ -27,23 +27,38 @@ var wireTypeMap = map[string]dnsmessage.Type{
 	"CAA":   dnsTypeCAA,
 }
 
-type Quad9Provider struct {
+type WireDoHProvider struct {
+	name    string
 	client  *http.Client
 	baseURL string
 }
 
-func NewQuad9Provider() *Quad9Provider {
-	return &Quad9Provider{
+func NewWireDoHProvider(name, baseURL string) *WireDoHProvider {
+	return &WireDoHProvider{
+		name:    name,
 		client:  &http.Client{Timeout: 5 * time.Second},
-		baseURL: "https://dns.quad9.net/dns-query",
+		baseURL: baseURL,
 	}
 }
 
-func (p *Quad9Provider) Name() string {
-	return "Quad9"
+func NewQuad9Provider() *WireDoHProvider {
+	return NewWireDoHProvider("Quad9", "https://dns.quad9.net/dns-query")
 }
 
-func (p *Quad9Provider) Query(ctx context.Context, domain, recordType string) ([]Record, error) {
+func NewNextDNSProvider() *WireDoHProvider {
+	return NewWireDoHProvider("NextDNS", "https://dns.nextdns.io")
+}
+
+// NewControlDProvider uses the public unfiltered Control D resolver (profile p0).
+func NewControlDProvider() *WireDoHProvider {
+	return NewWireDoHProvider("Control D", "https://freedns.controld.com/p0")
+}
+
+func (p *WireDoHProvider) Name() string {
+	return p.name
+}
+
+func (p *WireDoHProvider) Query(ctx context.Context, domain, recordType string) ([]Record, error) {
 	qtype, ok := wireTypeMap[recordType]
 	if !ok {
 		return nil, fmt.Errorf("unsupported record type for wire format: %s", recordType)
@@ -77,17 +92,17 @@ func (p *Quad9Provider) Query(ctx context.Context, domain, recordType string) ([
 
 	resp, err := p.client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("querying DoH (Quad9): %w", err)
+		return nil, fmt.Errorf("querying DoH (%s): %w", p.name, err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("reading response (Quad9): %w", err)
+		return nil, fmt.Errorf("reading response (%s): %w", p.name, err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("DoH (Quad9) returned status %d", resp.StatusCode)
+		return nil, fmt.Errorf("DoH (%s) returned status %d", p.name, resp.StatusCode)
 	}
 
 	return parseWireResponse(body)

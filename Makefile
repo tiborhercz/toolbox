@@ -13,6 +13,9 @@ build:
 			cd ../../../ && \
 			go build .
 
+run: build
+			./toolbox webui
+
 # Not fully supported
 build-tiny:
 			tinygo build -o static/UI/public/main.wasm -target wasm ./wasm/main.go

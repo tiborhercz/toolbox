@@ -50,6 +50,8 @@ GOOS=js GOARCH=wasm go build -o static/UI/public/main.wasm wasm/*.go
 ### Makefile
 To build the toolbox run: `make build`
 
+To build the toolbox and start the web UI run: `make run`
+
 ## Tools
 
 ### Browser

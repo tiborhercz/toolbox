@@ -125,45 +125,86 @@
               <div class="font-weight-bold mb-2">Differences detected</div>
               <v-table density="compact">
                 <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Type</th>
-                      <th class="text-left">Value</th>
-                      <th
-                        v-for="provider in comparedProviders"
-                        v-bind:key="provider"
-                        class="text-center"
-                      >
-                        {{ provider }}
-                      </th>
-                    </tr>
-                  </thead>
+                  <colgroup>
+                    <col style="width: 1%">
+                    <col style="width: 1%">
+                    <col>
+                  </colgroup>
                   <tbody>
-                    <tr
-                      v-for="diff in propagationDiffs"
-                      v-bind:key="diff.record"
+                    <template
+                      v-for="group in providerDiffs"
+                      v-bind:key="group.provider"
                     >
-                      <td>{{ diff.type }}</td>
-                      <td class="py-1 text-break">{{ diff.value }}</td>
-                      <td
-                        v-for="provider in comparedProviders"
-                        v-bind:key="provider"
-                        class="text-center"
+                      <tr>
+                        <th colspan="3">
+                          <div class="d-flex flex-wrap align-center justify-space-between ga-2">
+                            <span class="font-weight-bold">{{ group.provider }}</span>
+                            <span
+                              v-if="group.error"
+                              class="font-weight-regular text-medium-emphasis"
+                            >
+                              <v-icon
+                                class="mr-1"
+                                icon="mdi-alert-circle-outline"
+                                size="small"
+                              />
+                              Not compared, the lookup failed
+                            </span>
+                            <span
+                              v-else-if="group.rows.length === 0"
+                              class="font-weight-regular text-medium-emphasis"
+                            >
+                              <v-icon
+                                class="mr-1"
+                                color="success"
+                                icon="mdi-check-circle"
+                                size="small"
+                              />
+                              No differences
+                            </span>
+                            <span
+                              v-else
+                              class="d-flex ga-2"
+                            >
+                              <v-chip
+                                v-if="group.missing > 0"
+                                color="error"
+                                size="small"
+                                variant="tonal"
+                              >
+                                {{ group.missing }} missing
+                              </v-chip>
+                              <v-chip
+                                v-if="group.extra > 0"
+                                color="info"
+                                size="small"
+                                variant="tonal"
+                              >
+                                {{ group.extra }} extra
+                              </v-chip>
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+                      <tr
+                        v-for="row in group.rows"
+                        v-bind:key="group.provider + row.record"
                       >
-                        <v-icon
-                          v-if="diff.present.includes(provider)"
-                          color="success"
-                          icon="mdi-check-circle"
-                          title="Present"
-                        />
-                        <v-icon
-                          v-else
-                          color="error"
-                          icon="mdi-close-circle"
-                          title="Missing"
-                        />
-                      </td>
-                    </tr>
+                        <td
+                          class="pl-4 pl-sm-8 text-no-wrap"
+                          v-bind:title="row.title"
+                        >
+                          <v-icon
+                            size="small"
+                            v-bind:color="row.missing ? 'error' : 'info'"
+                            v-bind:icon="row.missing ? 'mdi-minus-circle' : 'mdi-plus-circle'"
+                          />
+                          <span class="d-none d-sm-inline ml-1">{{ row.missing ? 'Missing' : 'Extra' }}</span>
+                        </td>
+                        <td class="text-no-wrap">{{ row.type }}</td>
+                        <td class="py-1 text-break">{{ row.value }}</td>
+                      </tr>
+                    </template>
                   </tbody>
                 </template>
               </v-table>
@@ -250,21 +291,36 @@ const flushLinks = computed(() => {
   ]
 })
 
-const comparedProviders = computed(() => propagationResults.value
-  .filter((result) => !result.error)
-  .map((result) => result.provider))
+// A record that not every provider returned is listed under the providers on
+// the smaller side: as missing where most of the others have it, as extra
+// where most of the others do not. diff.record is formatted as "TYPE:value".
+const providerDiffs = computed(() => propagationResults.value.map((result) => {
+  const diffs = (!result.error && propagationSummary.value?.diffs) || []
+  const rows = diffs
+    .map((diff) => {
+      const missing = diff.missing.includes(result.provider)
+      const [same, others] = missing ? [diff.missing, diff.present] : [diff.present, diff.missing]
+      const separator = diff.record.indexOf(':')
+      return {
+        record: diff.record,
+        type: diff.record.slice(0, separator),
+        value: diff.record.slice(separator + 1),
+        missing,
+        minority: same.length <= others.length,
+        title: `${missing ? 'Returned' : 'Not returned'} by ${others.join(', ')}`,
+      }
+    })
+    .filter((row) => row.minority)
+    .sort((a, b) => a.record.localeCompare(b.record))
 
-// diff.record is formatted as "TYPE:value"
-const propagationDiffs = computed(() => (propagationSummary.value?.diffs || [])
-  .map((diff) => {
-    const separator = diff.record.indexOf(':')
-    return {
-      ...diff,
-      type: diff.record.slice(0, separator),
-      value: diff.record.slice(separator + 1),
-    }
-  })
-  .sort((a, b) => a.record.localeCompare(b.record)))
+  return {
+    provider: result.provider,
+    error: Boolean(result.error),
+    rows,
+    missing: rows.filter((row) => row.missing).length,
+    extra: rows.filter((row) => !row.missing).length,
+  }
+}))
 
 const lookup = async () => {
   if (!domain.value) {

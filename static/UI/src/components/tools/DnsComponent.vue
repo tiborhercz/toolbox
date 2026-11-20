@@ -36,11 +36,10 @@
         </v-col>
         <v-col
           cols="12"
-          sm="4"
-          md="4"
+          md="6"
+          class="d-flex flex-wrap align-start ga-2"
         >
           <v-btn
-            class="mr-2"
             v-bind:loading="loading"
             v-on:click="lookup()"
           >
@@ -52,24 +51,28 @@
           >
             Check Propagation
           </v-btn>
-        </v-col>
-        <v-col
-          cols="12"
-          class="d-flex flex-wrap align-center ga-2 pt-0"
-        >
-          <span>Flush cache:</span>
-          <v-btn
-            v-for="link in flushLinks"
-            v-bind:key="link.name"
-            v-bind:href="link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            size="small"
-            variant="tonal"
-            append-icon="mdi-open-in-new"
-          >
-            {{ link.name }}
-          </v-btn>
+          <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn
+                v-bind="props"
+                variant="text"
+                append-icon="mdi-menu-down"
+              >
+                Flush Cache
+              </v-btn>
+            </template>
+            <v-list density="compact">
+              <v-list-item
+                v-for="link in flushLinks"
+                v-bind:key="link.name"
+                v-bind:href="link.url"
+                v-bind:title="link.name"
+                target="_blank"
+                rel="noopener noreferrer"
+                append-icon="mdi-open-in-new"
+              />
+            </v-list>
+          </v-menu>
         </v-col>
       </v-row>
 

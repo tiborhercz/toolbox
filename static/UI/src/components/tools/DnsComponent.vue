@@ -53,6 +53,24 @@
             Check Propagation
           </v-btn>
         </v-col>
+        <v-col
+          cols="12"
+          class="d-flex flex-wrap align-center ga-2 pt-0"
+        >
+          <span>Flush cache:</span>
+          <v-btn
+            v-for="link in flushLinks"
+            v-bind:key="link.name"
+            v-bind:href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            size="small"
+            variant="tonal"
+            append-icon="mdi-open-in-new"
+          >
+            {{ link.name }}
+          </v-btn>
+        </v-col>
       </v-row>
 
       <v-row v-if="records.length > 0">
@@ -216,6 +234,21 @@ const loading = ref(false)
 const propagationLoading = ref(false)
 const error = ref(false)
 const errorMessages = ref([])
+
+// Each resolver has its own page for flushing a domain from its cache. Only
+// the OpenDNS page takes the domain from the URL.
+const flushLinks = computed(() => {
+  const openDns = new URL('https://cachecheck.opendns.com/')
+  if (domain.value.trim()) {
+    openDns.searchParams.set('d', domain.value.trim())
+  }
+
+  return [
+    { name: 'Cloudflare', url: 'https://one.one.one.one/purge-cache/' },
+    { name: 'Google', url: 'https://dns.google/cache' },
+    { name: 'OpenDNS', url: openDns.href },
+  ]
+})
 
 const comparedProviders = computed(() => propagationResults.value
   .filter((result) => !result.error)

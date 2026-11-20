@@ -18,6 +18,23 @@ This means you don't know what they do with your sensitive data. Another downsid
 
 This toolbox runs locally on your machine and all the processing is done in your browser using WebAssembly or JavaScript.
 
+## Usage
+
+Start the web UI:
+
+```shell
+toolbox webui
+```
+
+It runs at http://localhost:8000, use `-p` to pick another port.
+The tools are also available from the command line, see `toolbox --help`.
+
+To run it from source you need Go and Node.js. Run `npm install` in `static/UI` once, then:
+
+```shell
+make run
+```
+
 ## Installation
 
 Install instructions

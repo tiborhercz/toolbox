@@ -105,15 +105,50 @@
               variant="tonal"
             >
               <div class="font-weight-bold mb-2">Differences detected</div>
-              <div
-                v-for="(diff, i) in propagationSummary.diffs"
-                v-bind:key="i"
-                class="mb-1"
-              >
-                <strong>{{ diff.record }}</strong><br />
-                Present: {{ diff.present.join(', ') }}<br />
-                Missing: {{ diff.missing.join(', ') }}
-              </div>
+              <v-table density="compact">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Type</th>
+                      <th class="text-left">Value</th>
+                      <th
+                        v-for="provider in comparedProviders"
+                        v-bind:key="provider"
+                        class="text-center"
+                      >
+                        {{ provider }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="diff in propagationDiffs"
+                      v-bind:key="diff.record"
+                    >
+                      <td>{{ diff.type }}</td>
+                      <td class="py-1 text-break">{{ diff.value }}</td>
+                      <td
+                        v-for="provider in comparedProviders"
+                        v-bind:key="provider"
+                        class="text-center"
+                      >
+                        <v-icon
+                          v-if="diff.present.includes(provider)"
+                          color="success"
+                          icon="mdi-check-circle"
+                          title="Present"
+                        />
+                        <v-icon
+                          v-else
+                          color="error"
+                          icon="mdi-close-circle"
+                          title="Missing"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-table>
             </v-alert>
           </v-col>
         </v-row>
@@ -168,7 +203,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const recordTypes = ['ALL', 'A', 'AAAA', 'MX', 'NS', 'TXT', 'CNAME', 'SOA', 'CAA', 'DMARC']
 
@@ -181,6 +216,22 @@ const loading = ref(false)
 const propagationLoading = ref(false)
 const error = ref(false)
 const errorMessages = ref([])
+
+const comparedProviders = computed(() => propagationResults.value
+  .filter((result) => !result.error)
+  .map((result) => result.provider))
+
+// diff.record is formatted as "TYPE:value"
+const propagationDiffs = computed(() => (propagationSummary.value?.diffs || [])
+  .map((diff) => {
+    const separator = diff.record.indexOf(':')
+    return {
+      ...diff,
+      type: diff.record.slice(0, separator),
+      value: diff.record.slice(separator + 1),
+    }
+  })
+  .sort((a, b) => a.record.localeCompare(b.record)))
 
 const lookup = async () => {
   if (!domain.value) {
